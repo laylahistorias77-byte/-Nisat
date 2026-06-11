@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muslima Companion - Bienestar Espiritual</title>
-    <!-- Cargamos la librería oficial de Telegram Mini Apps -->
+    <title>Nisat - Bienestar Espiritual</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
@@ -222,7 +221,7 @@
             font-size: 14px;
         }
 
-        /* Reproductor de Audio */
+        /* Reproductor de Audio y Enlaces */
         .audio-item {
             background: white;
             padding: 15px;
@@ -240,6 +239,20 @@
         audio {
             width: 100%;
             height: 35px;
+        }
+
+        .btn-link-qariah {
+            display: block;
+            text-align: center;
+            background: var(--lila-oscuro);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(139, 0, 139, 0.2);
         }
 
         .btn-link-yt {
@@ -298,11 +311,10 @@
 
     <div class="container">
         <header>
-            <h1>🌸 Muslimate</h1>
+            <h1>🌺 Nisat</h1>
             <p class="subtitle">Tu espacio de calma y recuerdo diario</p>
         </header>
 
-        <!-- PANTALLA INICIAL: SELECCIÓN DE MODO -->
         <div id="screen-inicio" class="screen active">
             <h3 style="text-align: center; margin-bottom: 15px;">¿Cómo te encuentras hoy, hermana?</h3>
             <button class="btn-modo btn-menstruacion" onclick="cambiarModo('menstruacion')">
@@ -316,17 +328,14 @@
             </button>
         </div>
 
-        <!-- PANTALLA: CONTENIDO PRINCIPAL DE ESTADOS -->
         <div id="screen-estados" class="screen">
             <button class="btn-back" onclick="volverInicio()">← Cambiar de modo</button>
             <h3 id="titulo-modo" style="margin-bottom: 10px;">Estados</h3>
             <p class="subtitle">Selecciona tu estado actual:</p>
             
             <div id="grid-dinamico" class="grid-estados">
-                <!-- Se rellena automáticamente mediante JavaScript -->
-            </div>
+                </div>
 
-            <!-- Tarjeta donde se muestra la Dua y Frase -->
             <div id="card-resultado" class="card-contenido">
                 <div id="dua-instruccion" style="font-size: 12px; font-weight: bold; color: var(--rosa-oscuro); margin-bottom: 8px;"></div>
                 <div id="dua-arabe" class="arabe"></div>
@@ -337,35 +346,28 @@
             </div>
         </div>
 
-        <!-- PANTALLA: QURAN Y CALMA -->
         <div id="screen-quran" class="screen">
             <h3 style="margin-bottom: 10px;">Escucha el Qur'an y Cálmate</h3>
             <p class="subtitle" style="margin-bottom: 15px;">Permite que las palabras de Allah calmen tu cuerpo y tu mente. Recuerda que solo Allah es Quien cura.</p>
             
-            <!-- Audios directos en la app -->
             <div class="audio-item">
-                <p>Surah Yasin - Abdul Rahman Al-Ossi</p>
-                <audio controls src="https://server6.mp3quran.net/aloosi//036.mp3"></audio>
-            </div>
-
-            <div class="audio-item">
-                <p>Surah Ghafir - Reuayat Hafs</p>
-                <audio controls src="https://server16.mp3quran.net/a_bukhari/Rewayat-Hafs-A-n-Assem//040.mp3"></audio>
-            </div>
-
-            <div class="audio-item">
-                <p>Surah Maryam - Raad Al Kurdi</p>
-                <audio controls src="https://server6.mp3quran.net/kurdi//019.mp3"></audio>
+                <p>Surah Ta-Ha - Abdulaziz Asiri</p>
+                <audio controls src="https://server16.mp3quran.net/abdulazizasiri/Rewayat-Hafs-A-n-Assem//020.mp3"></audio>
             </div>
 
             <div class="divider"></div>
+            <p class="subtitle" style="margin-bottom: 8px; font-weight: bold;">Recitaciones en Qariah App:</p>
 
-            <!-- Enlaces externos a YouTube -->
+            <a href="https://qariah.app/share/recitation/6936fece2967118885ed3a76" target="_blank" class="btn-link-qariah">🎧 Escuchar Recitación 1 (Qariah)</a>
+            <a href="https://qariah.app/share/recitation/63151abd5172d2516366fd5c" target="_blank" class="btn-link-qariah">🎧 Escuchar Recitación 2 (Qariah)</a>
+
+            <div class="divider"></div>
+            <p class="subtitle" style="margin-bottom: 8px; font-weight: bold;">Vídeos recomendados en YouTube:</p>
+
             <a href="https://youtu.be/TjTfJaZVGMs?is=_GFv2DVa_b9iiqSp" target="_blank" class="btn-link-yt">▶ Versos de Sanación (YouTube)</a>
             <a href="https://www.youtube.com/live/Lt1fF8a_Nao?is=JxkRYVwdnYcsNCq-" target="_blank" class="btn-link-yt">▶ Suras para Calmarte (YouTube)</a>
         </div>
 
-        <!-- PANTALLA: RECUERDO / DHIKR -->
         <div id="screen-dhikr" class="screen">
             <h3 style="margin-bottom: 5px;">Contador de Dhikr</h3>
             <p class="subtitle" style="margin-bottom: 15px;">Mantén tu lengua húmeda con el recuerdo de Allah.</p>
@@ -384,7 +386,6 @@
             </div>
         </div>
 
-        <!-- MENÚ DE NAVEGACIÓN INFERIOR -->
         <nav class="nav-tabs">
             <button class="tab-icon active" id="tab-home" onclick="navegar('home')">🏠<br>Inicio</button>
             <button class="tab-icon" id="tab-quran" onclick="navegar('quran')">🎧<br>Audio</button>
@@ -393,14 +394,12 @@
     </div>
 
     <script>
-        // Inicializar Telegram WebApp
         const tg = window.Telegram.WebApp;
         tg.expand();
 
         let modoActual = '';
         let puntosDhikr = 0;
 
-        // Base de datos de contenido
         const datos = {
             menstruacion: {
                 titulo: "🩸 Menstruación y Postparto",
@@ -445,7 +444,7 @@
                     {
                         nombre: "Náuseas o Cansancio",
                         instruccion: "",
-                        arabe: "اللَّهُمَّ عَافِنِي فِي BADANÍ، اللَّهُمَّ عَافِنِي فِي SAM'Í، اللَّهُمَّ عَافِنِي فِي BASARÍ",
+                        arabe: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي",
                         trans: "Allahumma 'afini fi badani, Allahumma 'afini fi sam'i, Allahumma 'afini fi basari.",
                         trad: "¡Oh Allah! Sana mi cuerpo, ¡Oh Allah! Sana mi oído, ¡Oh Allah! Sana mi vista.",
                         frase: "Cada malestar, cada náusea y cada minuto de cansancio físico que experimentas es recompensado por Allah. Estás albergando un milagro en tu vientre; descansa y confía en que solo Allah te devuelve las fuerzas."
@@ -461,7 +460,7 @@
                     {
                         nombre: "Miedo al Parto",
                         instruccion: "",
-                        arabe: "اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَZNA إِذَا شِئْتَ سَهْلًا",
+                        arabe: "اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا",
                         trans: "Allahumma la sahla illa ma ja'altahu sahla, wa Anta taj'alul-hazna idha shi'ta sahla.",
                         trad: "¡Oh Allah! No hay facilidad excepto lo que Tú haces fácil, y Tú haces que la dificultad se vuelva fácil si así lo deseas.",
                         frase: "El mismo Creador que sostiene los cielos sin pilares es Quien guiará y facilitará tu parto. No estás sola; tu cuerpo fue diseñado con sabiduría divina para esto. Entrégale tus miedos a Allah."
