@@ -13,7 +13,7 @@
             --bg-lila: #E6E6FA;
             --bg-rosa: #FFE4E1;
             --bg-azul: #E0EEEE;
-            --rosa-active: #FFC0CB; /* Rosa pastel ligero para botón seleccionado */
+            --rosa-active: #FFD1DC; /* Rosa pastel ligero para activos */
             --texto-principal: #4A4A4A;
         }
 
@@ -29,7 +29,7 @@
             transition: background-color 0.3s;
         }
 
-        /* barra superior e inicio */
+        /* Barra Superior */
         .header-actions {
             width: 100%;
             display: flex;
@@ -65,7 +65,7 @@
 
         /* Tarjetas y Botones */
         .card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 15px;
@@ -93,7 +93,7 @@
             border-color: #FFB6C1;
         }
 
-        /* Caja de Ayas Aleatorias con Degradado Pastel */
+        /* Contenedor Ayas */
         .aya-box {
             background: linear-gradient(135deg, #FFE4E1 0%, #E6E6FA 100%);
             border-radius: 15px;
@@ -117,14 +117,14 @@
             font-size: 1.4rem;
             direction: rtl;
             margin-bottom: 10px;
-            line-height: 2rem;
+            line-height: 2.2rem;
         }
 
         .transliteration {
             font-style: italic;
             font-size: 0.9rem;
             margin-bottom: 8px;
-            color: #666;
+            color: #555;
         }
 
         .translation {
@@ -138,11 +138,19 @@
             margin-top: 5px;
         }
 
-        /* Tasbih Interactivo */
+        /* Tasbih e icono Corazón corregido */
+        .tasbih-area {
+            position: relative;
+            height: 160px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
         .tasbih-display {
             width: 130px;
             height: 130px;
-            margin: 20px auto;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -152,33 +160,42 @@
             border-radius: 50%;
             box-shadow: 0 6px 15px rgba(0,0,0,0.1);
             cursor: pointer;
-            transition: all 0.1s;
+            z-index: 2;
         }
 
         .tasbih-display.shape-heart {
-            background: #FFC0CB;
+            background: #FFB6C1;
             clip-path: path('M12 4.419c-2.826-5.695-11.999-4.064-11.999 3.27 0 7.27 9.903 10.938 11.999 15.311 2.096-4.373 12-8.041 12-15.311 0-7.327-9.17-8.972-12-3.27z');
-            transform: scale(4);
+            transform: scale(4.5);
             color: white;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             width: 30px;
             height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 2px;
         }
 
-        /* Estilos de Lista de Remedios */
+        /* Elementos de Remedios */
         .remedio-item {
             display: flex;
             align-items: center;
-            padding: 12px;
+            padding: 15px;
             background: white;
             margin: 8px 0;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
             font-weight: bold;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.2s;
         }
 
-        /* Menú de Navegación Inferior */
+        .remedio-item.selected {
+            background-color: var(--rosa-active);
+        }
+
+        /* Menú Inferior de 4 Botones */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -187,24 +204,34 @@
             background: white;
             display: flex;
             justify-content: space-around;
-            padding: 10px 0;
+            padding: 12px 0;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            z-index: 100;
         }
 
         .nav-item {
             background: none;
             border: none;
-            font-size: 1.3rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #777;
             cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .nav-item.active {
-            background-color: var(--rosa-active);
+            color: var(--texto-principal);
+            font-weight: bold;
         }
 
-        /* Calendario Simple */
+        .nav-item span {
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+        }
+
+        /* Calendario */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -218,11 +245,21 @@
             border-radius: 5px;
             font-size: 0.85rem;
         }
+
+        /* Input de ajustes */
+        .input-premium {
+            width: 90%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ACCIONES SUPERIORES (Se muestran siempre arriba) -->
+    <!-- BARRA SUPERIOR -->
     <div class="header-actions">
         <button class="btn-icon" id="btn-cal" onclick="switchScreen('screen-calendar')">📅</button>
         <div id="user-stars">⭐ <span id="stars-count">0</span></div>
@@ -232,40 +269,64 @@
     <!-- PANTALLA 1: INICIO (HOME) -->
     <div id="screen-home" class="screen active">
         <div class="card">
-            <h3>¿Cuál es tu estado hoy?</h3>
-            <button class="btn-status" id="status-normal" onclick="selectStatus('normal')">🌸 General / Bienestar</button>
-            <button class="btn-status" id="status-menstruacion" onclick="selectStatus('menstruacion')">🩸 Menstruación</button>
-            <button class="btn-status" id="status-embarazo" onclick="selectStatus('embarazo')">🤰 Embarazo</button>
-            <button class="btn-status" id="status-menopausia" onclick="selectStatus('menopausia')">🍂 Madurez / Menopausia</button>
+            <h3 class="lang-txt" data-es="¿Cuál es tu estado hoy?" data-en="What is your status today?">¿Cuál es tu estado hoy?</h3>
+            <button class="btn-status" id="status-normal" onclick="enterStatusView('normal')">🌸 General / Bienestar</button>
+            <button class="btn-status" id="status-menstruacion" onclick="enterStatusView('menstruacion')">🩸 Menstruación</button>
+            <button class="btn-status" id="status-embarazo" onclick="enterStatusView('embarazo')">🤰 Embarazo</button>
+            <button class="btn-status" id="status-menopausia" onclick="enterStatusView('menopausia')">🍂 Madurez / Menopausia</button>
         </div>
 
-        <!-- Botón Hadiths de Curación (Abajo de los estados) -->
         <button class="btn-status" style="background:#FFF8DC;" onclick="switchScreen('screen-hadiths')">🍯 Hadiths de Curación y Medicina</button>
 
-        <!-- Sección de Ayas Aleatorias -->
         <div class="aya-box" id="aya-container">
             <button class="aya-nav" onclick="nextAya()">🔄</button>
-            <div id="aya-content" style="margin-top:15px;">
-                <!-- Se llena con JS -->
-            </div>
+            <div id="aya-content" style="margin-top:15px;"></div>
         </div>
-        <div style="height: 70px;"></div> <!-- Espacio para no tapar con el menú -->
+        <div style="height: 80px;"></div>
     </div>
 
-    <!-- PANTALLA 2: DHIKR & TASBIH -->
+    <!-- PANTALLA DE DETALLE DE ESTADOS (DUAS ANTERIORES) -->
+    <div id="screen-status-view" class="screen">
+        <div class="card">
+            <button class="btn-status" onclick="switchScreen('screen-home')">⬅ Volver al Inicio</button>
+            <h3 id="status-title-view">Estado</h3>
+            <div id="status-content-view" style="text-align: left; margin-top: 15px;"></div>
+        </div>
+        <div style="height: 80px;"></div>
+    </div>
+
+    <!-- PANTALLA 2: AUDIOS / QURAN (RECUPERADO) -->
+    <div id="screen-audios" class="screen">
+        <div class="card">
+            <h3 class="lang-txt" data-es="Audios del Sagrado Corán" data-en="Holy Quran Audios">Audios del Sagrado Corán</h3>
+            <p class="lang-txt" data-es="Escucha y relaja tu corazón" data-en="Listen and soothe your heart">Escucha y relaja tu corazón</p>
+            
+            <div style="text-align:left; margin-top:15px;">
+                <p><strong>Sura Al-Baqarah (Mishary Rashid)</strong></p>
+                <audio controls style="width:100%;"><source src="https://server8.mp3quran.net/afs/002.mp3" type="audio/mpeg"></audio>
+                
+                <p style="margin-top:15px;"><strong>Sura Ar-Rahman</strong></p>
+                <audio controls style="width:100%;"><source src="https://server8.mp3quran.net/afs/055.mp3" type="audio/mpeg"></audio>
+
+                <p style="margin-top:15px;"><strong>Sura Al-Mulk</strong></p>
+                <audio controls style="width:100%;"><source src="https://server8.mp3quran.net/afs/067.mp3" type="audio/mpeg"></audio>
+            </div>
+        </div>
+        <div style="height: 80px;"></div>
+    </div>
+
+    <!-- PANTALLA 3: DHIKR & TASBIH -->
     <div id="screen-dhikr" class="screen">
         <div class="card">
-            <h3>Sección de Dhikr</h3>
+            <h3 class="lang-txt" data-es="Sección de Dhikr" data-en="Dhikr Section">Sección de Dhikr</h3>
             
-            <!-- Selector de Modos -->
-            <select id="dhikr-type" onchange="updateDhikrView()" style="padding:8px; border-radius:8px; width:100%;">
+            <select id="dhikr-type" onchange="updateDhikrView()" style="padding:10px; border-radius:8px; width:100%; margin-bottom:10px;">
                 <option value="subhanallah">SubhanAllah (سُبْحَانَ اللَّهِ)</option>
                 <option value="istighfar">Astaghfirullah (أَسْتَغْفِرُ اللَّهَ)</option>
                 <option value="lailaha">La ilaha illa Allah (لَا إِلَٰهَ إِلَّا اللَّهُ)</option>
                 <option value="combinado">Modo Combinado (Sunnah 33/33/33/1)</option>
             </select>
 
-            <!-- Personalización Visual del Tasbih -->
             <div style="margin: 12px 0; display:flex; justify-content:space-around;">
                 <select id="tasbih-shape" onchange="changeTasbihShape()" style="padding:5px; border-radius:5px;">
                     <option value="circle">Contador Círculo</option>
@@ -278,20 +339,40 @@
                 </select>
             </div>
 
-            <!-- El Contador Interactivo -->
-            <div id="tasbih-clicker" class="tasbih-display" onclick="incrementTasbih()">0</div>
+            <div class="tasbih-area">
+                <div id="tasbih-clicker" class="tasbih-display" onclick="incrementTasbih()">0</div>
+            </div>
             
             <p id="dhikr-target-text" style="font-weight:bold; color:#777;"></p>
             <div id="motivation-msg" style="color: #6A5ACD; font-weight:bold; min-height:20px;">¡Comienza tu Dhikr!</div>
         </div>
-        <div style="height: 70px;"></div>
+        <div style="height: 80px;"></div>
     </div>
 
-    <!-- PANTALLA 3: CALENDARIO -->
+    <!-- PANTALLA 4: AJUSTES (IDIOMA Y NOMBRE DE USUARIO) -->
+    <div id="screen-settings" class="screen">
+        <div class="card">
+            <h3 class="lang-txt" data-es="Ajustes de la Aplicación" data-en="App Settings">Ajustes de la Aplicación</h3>
+            
+            <div style="text-align:left; margin-top:15px;">
+                <label><strong>1. Selecciona tu Idioma / Select Language:</strong></label>
+                <select id="lang-selector" onchange="changeLanguage()" style="padding:10px; border-radius:8px; width:100%; margin:10px 0;">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                </select>
+
+                <label style="margin-top:15px; display:block;"><strong>2. Tu nombre para el Ranking:</strong></label>
+                <input type="text" id="username-input" class="input-premium" placeholder="Escribe tu nombre aquí..." oninput="saveUsername()">
+            </div>
+        </div>
+        <div style="height: 80px;"></div>
+    </div>
+
+    <!-- PANTALLA: CALENDARIO -->
     <div id="screen-calendar" class="screen">
         <div class="card">
             <button class="btn-status" onclick="switchScreen('screen-home')">⬅ Volver al Inicio</button>
-            <h3 id="cal-years-title">Año 2026 / 1447 AH</h3>
+            <h3>Año 2026 / 1447 AH</h3>
             <p><strong>Mes:</strong> Enero / Rajab</p>
             
             <div style="text-align:left; margin:10px 0;">
@@ -301,200 +382,188 @@
                 <button onclick="saveCalendarData()" style="padding:5px 10px; background:#FFB6C1; border:none; border-radius:5px;">Guardar</button>
             </div>
 
-            <div class="calendar-grid" id="calendar-days-container">
-                <!-- Se autogenera con JS -->
-            </div>
-
-            <hr style="margin:20px 0; border:0; border-top:1px solid #ccc;">
-            <h4>¿Cómo sé si mi menstruación terminó?</h4>
-            <p style="font-size:0.9rem; text-align:left; color:#555;">
-                La pureza ritual (Tuhr) se reconoce mediante uno de estos dos signos:<br><br>
-                1. <strong>Sequedad Total (Al-Jafaf):</strong> Que al introducir un algodón este salga completamente limpio, sin rastros de sangre, flujo marrón o amarillento.<br><br>
-                2. <strong>El Flujo Blanco (Al-Qassa al-Bayda):</strong> Una secreción blanca o transparente característica que indica el fin exacto del ciclo.
-            </p>
+            <div class="calendar-grid" id="calendar-days-container"></div>
         </div>
+        <div style="height: 80px;"></div>
     </div>
 
-    <!-- PANTALLA 4: HADITHS DE CURACIÓN -->
+    <!-- PANTALLA: HADITHS DE CURACIÓN -->
     <div id="screen-hadiths" class="screen">
         <div class="card">
             <button class="btn-status" onclick="switchScreen('screen-home')">⬅ Volver al Inicio</button>
             <h3>Medicina Propética & Curación</h3>
+            
             <div id="hadiths-menu-list">
-                <div class="remedio-item" onclick="showRemedioDetail('miel')">🍯 Miel (Shifá)</div>
-                <div class="remedio-item" onclick="showRemedioDetail('negra')">🌱 Semilla Negra</div>
-                <div class="remedio-item" onclick="showRemedioDetail('datiles')">🌴 Dátiles Ajwa y Talbina</div>
+                <div class="remedio-item" id="rem-miel" onclick="showRemedioDetail('miel')">🍯 Miel (Shifá)</div>
+                <div class="remedio-item" id="rem-negra" onclick="showRemedioDetail('negra')">🌱 Semilla Negra</div>
+                <div class="remedio-item" id="rem-datiles" onclick="showRemedioDetail('datiles')">🌴 Dátiles Ajwa y Talbina</div>
             </div>
 
-            <!-- Contenedor dinámico de información del remedio seleccionado -->
-            <div id="remedio-detail" style="display:none; text-align:left; margin-top:20px; background:white; padding:15px; border-radius:10px;">
-                <!-- Rellenado por JS -->
-            </div>
+            <div id="remedio-detail" style="display:none; text-align:left; margin-top:20px; background:white; padding:15px; border-radius:10px;"></div>
         </div>
+        <div style="height: 80px;"></div>
     </div>
 
-    <!-- PANTALLA 5: RANKING SEMANAL -->
+    <!-- PANTALLA: RANKING SEMANAL -->
     <div id="screen-ranking" class="screen">
         <div class="card">
             <button class="btn-status" onclick="switchScreen('screen-home')">⬅ Volver al Inicio</button>
             <h3>🏆 Ranking Semanal de Dhikr</h3>
-            <p style="font-size:0.9rem; color:#666;">Tu progreso se guarda automáticamente con tu cuenta vinculada a Telegram.</p>
-            <div style="text-align:left; margin-top:15px;">
+            <p>Tu progreso se guarda automáticamente con tu cuenta vinculada a Telegram.</p>
+            
+            <!-- Estrellas y Conteo solicitado abajo del mensaje informativo -->
+            <div style="font-size:1.1rem; font-weight:bold; color:#FF8C00; margin: 10px 0;">
+                ⭐ Total Estrellas: <span id="rank-stars-display">0</span> | Tu Conteo: <span id="rank-user-count">0</span>
+            </div>
+
+            <div style="text-align:left; margin-top:15px; border-top:1px solid #eee; padding-top:10px;">
                 <p>🥇 <strong>Fatima_A:</strong> 1,420 Dhikr</p>
                 <p>🥈 <strong>Aisha_D:</strong> 980 Dhikr</p>
-                <p>🥉 <strong>Tú (Hermana):</strong> <span id="rank-user-count">0</span> Dhikr</p>
+                <p>🥉 <strong id="display-user-rank-name">Tú (Hermana)</strong>: <span id="rank-user-count-2">0</span> Dhikr</p>
             </div>
         </div>
+        <div style="height: 80px;"></div>
     </div>
 
-    <!-- MENÚ DE NAVEGACIÓN INFERIOR PRINCIPAL -->
+    <!-- MENÚ DE NAVEGACIÓN INFERIOR (4 PESTAÑAS) -->
     <div class="nav-bar">
-        <button class="nav-item active" id="nav-home" onclick="switchScreen('screen-home')">🌺 Inicio</button>
-        <button class="nav-item" id="nav-dhikr" onclick="switchScreen('screen-dhikr')">📿 Dhikr</button>
+        <button class="nav-item active" id="nav-home" onclick="switchScreen('screen-home')"><span>🌺</span>Inicio</button>
+        <button class="nav-item" id="nav-audios" onclick="switchScreen('screen-audios')"><span>🎧</span>Audios</button>
+        <button class="nav-item" id="nav-dhikr" onclick="switchScreen('screen-dhikr')"><span>📿</span>Dhikr</button>
+        <button class="nav-item" id="nav-settings" onclick="switchScreen('screen-settings')"><span>⚙️</span>Ajustes</button>
     </div>
 
-    <!-- LÓGICA DE PROGRAMACIÓN (JAVASCRIPT) -->
     <script>
-        // Inicializar Telegram WebApp si está disponible
-        const tg = window.Telegram?.WebApp;
-        if (tg) {
-            tg.expand(); // Expande la app a pantalla completa en Telegram
-            tg.ready();
-        }
-
-        // --- BASE DE DATOS LOCAL (PERSISTENCIA INTACTA) ---
+        // Inicializar datos
         let userData = JSON.parse(localStorage.getItem('nisat_user_data')) || {
             stars: 0,
             totalDhikr: 0,
             selectedStatus: 'normal',
             periodStart: 0,
-            periodEnd: 0
+            periodEnd: 0,
+            username: 'Hermana',
+            lang: 'es'
         };
 
         function saveToLocalStorage() {
             localStorage.setItem('nisat_user_data', JSON.stringify(userData));
             document.getElementById('stars-count').innerText = userData.stars;
+            document.getElementById('rank-stars-display').innerText = userData.stars;
             document.getElementById('rank-user-count').innerText = userData.totalDhikr;
+            document.getElementById('rank-user-count-2').innerText = userData.totalDhikr;
+            document.getElementById('display-user-rank-name').innerText = userData.username + " (Tú)";
         }
 
-        // --- BASE DE DATOS DE AYAS (CORÁN) ---
-        const ayas = [
-            { ar: "لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا", trans: "La tahzan, inna Allaha ma'ana", es: "\"No te entristezcas, porque Alá está con nosotros\".", src: "Sura At-Tawbah 9:40" },
-            { ar: "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا \n إِنَّ مَعَ الْعُسْرِ يُسْرًا", trans: "Fa inna ma'al 'usri yusra. Inna ma'al 'usri yusra.", es: "\"Porque, en verdad, con la dificultad vendrá la facilidad. Ciertamente, con la dificultad vendrá la facilidad\".", src: "Sura Ash-Sharh 94:5-6" },
-            { ar: "مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ", trans: "Ma wadda'aka rabbuka wa ma qala", es: "\"Tu Señor no te ha abandonado ni te aborrece\".", src: "Sura Ad-Duha 93:3" },
-            { ar: "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", trans: "Ya ayyuha lladhina amanu-sta'inu bis-sabri was-salah...", es: "\"¡Oh, creyentes! Buscad ayuda en la paciencia y en la oración. En verdad, Alá está con los pacientes\".", src: "Sura Al-Baqarah 2:153" },
-            { ar: "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا", trans: "La yukallifullah nafsan illa wus'aha", es: "\"Alá no impone a ninguna alma una carga mayor de la que puede soportar\".", src: "Sura Al-Baqarah 2:286" },
-            { ar: "إِنَّمَا أَشْكُو بَثِّي وَحُزْنِي إِلَى اللَّهِ", trans: "Innama ashku baththi wa huzni ila-llah", es: "\"Solo expongo mi queja y mi lamento ante Alá\".", src: "Sura Yusuf 12:86" }
-        ];
-        let currentAyaIndex = 0;
+        // --- ENTRAR A UN ESTADO (FLUJO APP REAL) ---
+        const contenidoEstados = {
+            normal: { title: "🌸 Estado General", html: "<p>Alhamdulillah por la salud y el bienestar. Mantente conectada hoy haciendo Dhikr constante y leyendo tus aleyas reconfortantes de la pantalla de inicio.</p>" },
+            menstruacion: { title: "🩸 Consejos para la Menstruación", html: "<h5>Dua en momentos de dolor/malestar:</h5><p class='arabic'>اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ اشْفِ أَنْتَ الشَّافِي</p><p><em>'Oh Allah, Señor de la humanidad, quita el malestar. Cura, Tú eres el Curador...'</em></p><p style='margin-top:10px;'>Recuerda que aunque no realices el Salat, el Dhikr y la súplica están totalmente permitidos y recompensados.</p>" },
+            embarazo: { title: "🤰 Súplicas para el Embarazo", html: "<h5>Dua por una descendencia piadosa:</h5><p class='arabic'>رَبِّ هَبْ لِي مِنْ لَدُنْكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ</p><p><em>'¡Señor mío! Concédeme de Tu parte una descendencia buena y pura. Tú eres Quien escucha las súplicas'.</em> (3:38)</p>" },
+            menopausia: { title: "🍂 Madurez y Sabiduría", html: "<h5>Dua solicitada para esta etapa:</h5><p class='arabic'>«اللَّهُمَّ بَارِكْ لِي فِي عُمْرِي، وَاجْعَلْ تَقَدُّمَ السِّنِّ زِيَادَةً لِي فِي النُّضْجِ وَالْحِكْمَةِ وَالتَّقَرُّبِ إِلَيْكَ»</p><p class='transliteration'>Allahumma barik li fi 'umri, waj'al taqaddumas-sinni ziyadatan li fin-nudhji wal-hikmati wat-taqarrubi ilayk.</p><p><em>'¡Oh Allah! Bendice mi vida, y haz que el avance de mi edad sea para mí un aumento en madurez, sabiduría y cercanía a Ti.'</em></p>" }
+        };
 
-        function loadAya() {
-            const data = ayas[currentAyaIndex];
-            document.getElementById('aya-content').innerHTML = `
-                <div class="arabic">${data.ar}</div>
-                <div class="transliteration">${data.trans}</div>
-                <div class="translation">${data.es}</div>
-                <div class="source">${data.src}</div>
-            `;
+        function enterStatusView(status) {
+            userData.selectedStatus = status;
+            saveToLocalStorage();
+            
+            // Pintar de rosa pastel ligero el seleccionado en la Home
+            document.querySelectorAll('.btn-status').forEach(b => b.classList.remove('selected'));
+            const btnMap = { normal: 'status-normal', menstruacion: 'status-menstruacion', embarazo: 'status-embarazo', menopausia: 'status-menopausia' };
+            if(btnMap[status]) document.getElementById(btnMap[status]).classList.add('selected');
+
+            // Cargar y mostrar contenido en la pantalla de detalle
+            document.getElementById('status-title-view').innerText = contenidoEstados[status].title;
+            document.getElementById('status-content-view').innerHTML = contenidoEstados[status].html;
+            switchScreen('screen-status-view');
         }
 
-        function nextAya() {
-            currentAyaIndex = (currentAyaIndex + 1) % ayas.length;
-            loadAya();
+        // --- SISTEMA DE IDIOMAS ---
+        const translations = {
+            es: { home: "🌺 Inicio", audios: "🎧 Audios", dhikr: "📿 Dhikr", settings: "⚙️ Ajustes" },
+            en: { home: "🌺 Home", audios: "🎧 Audios", dhikr: "📿 Dhikr", settings: "⚙️ Settings" }
+        };
+
+        function changeLanguage() {
+            const lang = document.getElementById('lang-selector').value;
+            userData.lang = lang;
+            saveToLocalStorage();
+
+            document.querySelectorAll('.lang-txt').forEach(el => {
+                el.innerText = el.getAttribute(`data-${lang}`);
+            });
+            
+            document.getElementById('nav-home').innerHTML = `<span>🌺</span>${translations[lang].home}`;
+            document.getElementById('nav-audios').innerHTML = `<span>🎧</span>${translations[lang].audios}`;
+            document.getElementById('nav-dhikr').innerHTML = `<span>📿</span>${translations[lang].dhikr}`;
+            document.getElementById('nav-settings').innerHTML = `<span>⚙️</span>${translations[lang].settings}`;
         }
 
-        // --- SISTEMA DE NAVEGACIÓN Y BOTÓN ACTIVO ROSA PASTEL LIGHT ---
+        function saveUsername() {
+            userData.username = document.getElementById('username-input').value || 'Hermana';
+            saveToLocalStorage();
+        }
+
+        // --- SECCIÓN HADITHS CON SELECCIÓN DE BOTÓN ACTIVO ---
+        const infoRemedios = {
+            miel: `<h5>📖 Corán - Sura An-Nahl (16:69)</h5><p class="arabic">يَخْرُجُ مِن بُطُونِهَا شَرَابٌ مُّخْتَلِفٌ أَلْوَانُهُ فِيهِ شِفَاءٌ Lِّلنَّاسِ</p><p><em>'De sus vientres sale un líquido de diferentes colores que contiene curación para los hombres.'</em></p><h5>📜 Hadith del Profeta (ﷺ)</h5><p>El Profeta dijo: 'La curación se encuentra en un trago de miel...' (Bujari)</p>`,
+            negra: `<h5>📜 Hadith de la Semilla Negra</h5><p class="arabic">فِي الْحَبَّةِ السَّوْدَاءِ شِفَاءٌ مِنْ كُلِّ دَاءٍ إِلاَّ السَّامَ</p><p>El Mensajero de Allah (ﷺ) dijo: <em>'En la semilla negra hay curación para todas las enfermedades excepto para la muerte'.</em> (Bujari)</p>`,
+            datiles: `<h5>📜 Dátiles Ajwa y Talbina</h5><p>'Quien tome siete dátiles de Ajwa por la mañana estará protegido contra el veneno y la magia ese día'. (Bujari)</p>`
+        };
+
+        function showRemedioDetail(key) {
+            document.querySelectorAll('.remedio-item').forEach(el => el.classList.remove('selected'));
+            document.getElementById(`rem-${key}`).classList.add('selected'); // Colorea rosa pastel el activo
+
+            const detailBox = document.getElementById('remedio-detail');
+            detailBox.style.display = "block";
+            detailBox.innerHTML = infoRemedios[key];
+        }
+
+        // --- NAVEGACIÓN GENERAL ---
         function switchScreen(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
 
-            // Actualizar menú inferior
             document.getElementById('nav-home').classList.toggle('active', screenId === 'screen-home');
+            document.getElementById('nav-audios').classList.toggle('active', screenId === 'screen-audios');
             document.getElementById('nav-dhikr').classList.toggle('active', screenId === 'screen-dhikr');
+            document.getElementById('nav-settings').classList.toggle('active', screenId === 'screen-settings');
             
-            // Actualizar botones de acción superior
             document.getElementById('btn-cal').classList.toggle('active', screenId === 'screen-calendar');
             document.getElementById('btn-rank').classList.toggle('active', screenId === 'screen-ranking');
         }
 
-        // Marcar estado con color rosa suave
-        function selectStatus(status) {
-            userData.selectedStatus = status;
-            saveToLocalStorage();
-            
-            document.querySelectorAll('.btn-status').forEach(b => b.classList.remove('selected'));
-            
-            if(status === 'normal') document.getElementById('status-normal').classList.add('selected');
-            if(status === 'menstruacion') document.getElementById('status-menstruacion').classList.add('selected');
-            if(status === 'embarazo') document.getElementById('status-embarazo').classList.add('selected');
-            
-            if(status === 'menopausia') {
-                document.getElementById('status-menopausia').classList.add('selected');
-                // Alerta con la Dua de madurez solicitada
-                alert("Dua para Ansiedad y Madurez:\n\n«اللَّهُمَّ بَارِكْ لِي فِي عُمْرِي، وَاجْعَلْ تَقَدُّمَ السِّنِّ زِيَادَةً لِي فِي النُّضْجِ وَالْحِكْمَةِ وَالتَّقَرُّبِ إِلَيْكَ»\n\n\"¡Oh Allah! Bendice mi vida, y haz que el avance de mi edad sea para mí un aumento en madurez, sabiduría y cercanía a Ti.\"");
-            }
-        }
-
-        // --- GESTIÓN DEL TASBIH / DHIKR ---
+        // --- LÓGICA DE TASBIH & CONTADOR ---
         let count = 0;
-        let comboStep = 1; // Control de ciclos combinados de la Sunnah
+        let comboStep = 1;
 
         function updateDhikrView() {
             count = 0;
             document.getElementById('tasbih-clicker').innerText = count;
             const mode = document.getElementById('dhikr-type').value;
-            const targetText = document.getElementById('dhikr-target-text');
-            
-            if (mode === 'combinado') {
-                targetText.innerText = "Modo Sunnah: Haz 33 SubhanAllah";
-                comboStep = 1;
-            } else {
-                targetText.innerText = "";
-            }
+            document.getElementById('dhikr-target-text').innerText = mode === 'combinado' ? "Modo Sunnah: Haz 33 SubhanAllah" : "";
         }
 
         function incrementTasbih() {
             count++;
             userData.totalDhikr++;
             document.getElementById('tasbih-clicker').innerText = count;
-
             const mode = document.getElementById('dhikr-type').value;
-            const targetText = document.getElementById('dhikr-target-text');
-            const motivation = document.getElementById('motivation-msg');
 
-            // Lógica Modo Combinado Sunnah
             if (mode === 'combinado') {
                 if (comboStep === 1 && count === 33) {
-                    triggerEffects("¡Alhamdulillah! Siguiente paso...");
-                    targetText.innerText = "Modo Sunnah: Haz 33 Alhamdulillah";
-                    count = 0;
-                    comboStep = 2;
+                    triggerEffects("¡Alhamdulillah! Siguiente..."); document.getElementById('dhikr-target-text').innerText = "Modo Sunnah: Haz 33 Alhamdulillah"; count = 0; comboStep = 2;
                 } else if (comboStep === 2 && count === 33) {
-                    triggerEffects("¡Allahu Akbar! Siguiente paso...");
-                    targetText.innerText = "Modo Sunnah: Haz 33 Allahu Akbar";
-                    count = 0;
-                    comboStep = 3;
+                    triggerEffects("¡Allahu Akbar! Siguiente..."); document.getElementById('dhikr-target-text').innerText = "Modo Sunnah: Haz 33 Allahu Akbar"; count = 0; comboStep = 3;
                 } else if (comboStep === 3 && count === 33) {
-                    triggerEffects("¡Último paso! Haz 1 vez La ilaha illa Allah...");
-                    targetText.innerText = "Modo Sunnah: 1 vez completo";
-                    count = 0;
-                    comboStep = 4;
+                    triggerEffects("Haz 1 vez La ilaha illa Allah..."); document.getElementById('dhikr-target-text').innerText = "Modo Sunnah: 1 vez completo"; count = 0; comboStep = 4;
                 } else if (comboStep === 4 && count === 1) {
-                    triggerEffects("¡Ciclo completo de la Sunnah! 🎉");
-                    userData.stars += 5; // Premio especial estrellas
-                    updateDhikrView();
+                    triggerEffects("¡Ciclo completo de la Sunnah! 🎉"); userData.stars += 5; updateDhikrView();
                 }
             } else {
-                // Modo Normal cada 33 cuentas
                 if (count % 33 === 0) {
                     userData.stars += 1;
-                    let customMessages = [
-                        "Que Allah te recompense con lo mejor. ✨",
-                        "Que Allah acepte tus súplicas más sinceras. 🌺",
-                        "Tu balanza de buenas acciones está creciendo. ¡Sigue adelante! 🌟"
-                    ];
-                    let randomMsg = customMessages[Math.floor(Math.random() * customMessages.length)];
-                    triggerEffects(randomMsg);
+                    triggerEffects("¡Que Allah te recompense con lo mejor! ✨");
                 }
             }
             saveToLocalStorage();
@@ -502,10 +571,9 @@
 
         function triggerEffects(msg) {
             document.getElementById('motivation-msg').innerText = msg;
-            confetti({ particleCount: 80, spread: 60, origin: { y: 0.7 } });
+            confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
         }
 
-        // Cambiar forma del Tasbih
         function changeTasbihShape() {
             const shape = document.getElementById('tasbih-shape').value;
             const clicker = document.getElementById('tasbih-clicker');
@@ -513,69 +581,45 @@
             if(shape === 'heart') clicker.classList.add('shape-heart');
         }
 
-        // Cambiar color del Tema General (Pasteles)
         function changeThemeColor() {
             const color = document.getElementById('tasbih-color').value;
-            if(color === 'lila') document.body.style.backgroundColor = "var(--bg-lila)";
-            if(color === 'rosa') document.body.style.backgroundColor = "var(--bg-rosa)";
-            if(color === 'azul') document.body.style.backgroundColor = "var(--bg-azul)";
+            const colorMap = { lila: 'var(--bg-lila)', rosa: 'var(--bg-rosa)', azul: 'var(--bg-azul)' };
+            if(colorMap[color]) document.body.style.backgroundColor = colorMap[color];
         }
 
-        // --- CALENDARIO HISTÓRICO INTEGRADO ---
+        // --- AYAS ---
+        const ayas = [
+            { ar: "لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا", trans: "La tahzan, inna Allaha ma'ana", es: "\"No te entristezcas, porque Alá está con nosotros\".", src: "At-Tawbah 9:40" },
+            { ar: "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا", trans: "Fa inna ma'al 'usri yusra", es: "\"Porque, en verdad, con la dificultad vendrá la facilidad\".", src: "Ash-Sharh 94:5" }
+        ];
+        let currentAyaIndex = 0;
+        function loadAya() {
+            const data = ayas[currentAyaIndex];
+            document.getElementById('aya-content').innerHTML = `<div class="arabic">${data.ar}</div><div class="transliteration">${data.trans}</div><div class="translation">${data.es}</div><div class="source">${data.src}</div>`;
+        }
+        function nextAya() { currentAyaIndex = (currentAyaIndex + 1) % ayas.length; loadAya(); }
+
+        // --- CALENDARIO ---
         function renderCalendar() {
-            const container = document.getElementById('calendar-days-container');
-            container.innerHTML = "";
-            
-            // Simular un mes completo de 30 días
+            const container = document.getElementById('calendar-days-container'); container.innerHTML = "";
             for (let i = 1; i <= 30; i++) {
                 let isPeriod = (i >= userData.periodStart && i <= userData.periodEnd && userData.periodStart !== 0);
-                container.innerHTML += `
-                    <div class="calendar-day" style="${isPeriod ? 'background:#FFC0CB;' : ''}">
-                        ${i} <br> ${isPeriod ? '🩸' : '🌸'}
-                    </div>
-                `;
+                container.innerHTML += `<div class="calendar-day" style="${isPeriod ? 'background:#FFC0CB;' : ''}">${i} <br> ${isPeriod ? '🩸' : '🌸'}</div>`;
             }
         }
-
         function saveCalendarData() {
-            const start = parseInt(document.getElementById('cal-start').value) || 0;
-            const end = parseInt(document.getElementById('cal-end').value) || 0;
-            userData.periodStart = start;
-            userData.periodEnd = end;
-            saveToLocalStorage();
-            renderCalendar();
-            alert("Historial guardado de forma permanente en tu app.");
+            userData.periodStart = parseInt(document.getElementById('cal-start').value) || 0;
+            userData.periodEnd = parseInt(document.getElementById('cal-end').value) || 0;
+            saveToLocalStorage(); renderCalendar();
         }
 
-        // --- SECCIÓN HADITHS DE CURACIÓN ---
-        const infoRemedios = {
-            miel: `<h5>📖 Corán - Sura An-Nahl (16:69)</h5>
-                   <p class="arabic">يَخْرُجُ مِن بُطُونِهَا شَرَابٌ مُّخْتَلِفٌ أَلْوَانُهُ فِيهِ شِفَاءٌ لِّلنَّاسِ</p>
-                   <p class="transliteration">Yakhruju min butuniha sharabun mukhtalifun alwanuhu fihi shifa'un lin-nas.</p>
-                   <p><em>"De sus vientres sale un líquido de diferentes colores que contiene curación para los hombres."</em></p>
-                   <h5>📜 Hadith del Profeta (ﷺ)</h5>
-                   <p>El Profeta dijo: "La curación se encuentra en tres cosas: un trago de miel, la incisión de la ventosa (Hiyama) o la cauterización por fuego, pero prohíbo a mi ummah la cauterización". (Bujari)</p>`,
-            negra: `<h5>📜 Hadith de la Semilla Negra (Habbat al-Barakah)</h5>
-                    <p class="arabic">فِي الْحَبَّةِ السَّوْدَاءِ شِفَاءٌ مِنْ كُلِّ دَاءٍ إِلاَّ السَّامَ</p>
-                    <p class="transliteration">Fil-habbatis-sawda'i shifa'un min kulli da'in illa-sam.</p>
-                    <p>Narró Abu Hurairah que el Mensajero de Allah (ﷺ) dijo: <em>"En la semilla negra hay curación para todas las enfermedades excepto para el 'Sam' (la muerte)".</em> (Bujari)</p>`,
-            datiles: `<h5>📜 Hadith de Dátiles Ajwa y Talbina</h5>
-                      <p>El Profeta (ﷺ) dijo: "Quien tome siete dátiles de Ajwa por la mañana estará protegido contra el veneno y la magia ese día". (Bujari)</p>
-                      <p><strong>La Talbina:</strong> El Mensajero de Allah también recomendaba el caldo de cebada (Talbina) diciendo: <em>"Aporta descanso al corazón del enfermo y alivia parte de su tristeza".</em></p>`
-        };
-
-        function showRemedioDetail(key) {
-            const detailBox = document.getElementById('remedio-detail');
-            detailBox.style.display = "block";
-            detailBox.innerHTML = infoRemedios[key];
-        }
-
-        // --- AL CARGAR LA APP ---
         window.onload = function() {
             loadAya();
-            selectStatus(userData.selectedStatus);
             renderCalendar();
-            saveToLocalStorage(); // Sincroniza interfaz con datos recuperados
+            document.getElementById('username-input').value = userData.username;
+            document.getElementById('lang-selector').value = userData.lang;
+            changeLanguage();
+            saveToLocalStorage();
             updateDhikrView();
         }
     </script>
