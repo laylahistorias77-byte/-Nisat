@@ -13,8 +13,12 @@
             --lila-pastel: #E6E6FA;
             --lila-medio: #D8BFD8;
             --lila-oscuro: #8B008B;
+            --azul-pastel: #E0F7FA;
+            --azul-medio: #4DD0E1;
+            --azul-oscuro: #00838F;
             --texto: #4A374A;
-            --rosa-activo: #FFD1DC; /* Rosa pastel suave para elementos seleccionados */
+            --bg-dinamico: linear-gradient(135deg, #FFF0F5 0%, #E6E6FA 100%);
+            --rosa-activo: #FFD1DC;
         }
 
         * {
@@ -25,13 +29,14 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--rosa-pastel) 0%, var(--lila-pastel) 100%);
+            background: var(--bg-dinamico);
             color: var(--texto);
             min-height: 100vh;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: background 0.3s;
         }
 
         .container {
@@ -46,16 +51,30 @@
             position: relative;
         }
 
-        /* Botón de Ranking Superior */
+        /* Botones superiores del Home */
+        .btn-top-calendario {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid var(--lila-medio);
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            color: var(--texto);
+        }
+
         .ranking-top-btn {
             position: absolute;
             top: 15px;
             right: 15px;
             background: rgba(255, 255, 255, 0.8);
-            padding: 5px 12px;
+            padding: 6px 12px;
             border-radius: 20px;
             border: 1px solid var(--lila-medio);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             cursor: pointer;
             color: var(--texto);
@@ -64,7 +83,7 @@
         header {
             text-align: center;
             margin-bottom: 25px;
-            margin-top: 15px;
+            margin-top: 25px;
         }
 
         h1 {
@@ -102,35 +121,34 @@
             gap: 10px;
         }
 
-        .btn-menstruacion {
-            background-color: var(--rosa-medio);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4);
+        .btn-menstruacion { background-color: var(--rosa-medio); color: white; box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4); }
+        .btn-embarazo { background-color: var(--lila-medio); color: white; box-shadow: 0 4px 15px rgba(216, 191, 216, 0.4); }
+        .btn-menopausia { background-color: #C71585; color: white; box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3); }
+        .btn-general { background-color: #4A374A; color: white; box-shadow: 0 4px 15px rgba(74, 55, 74, 0.3); }
+
+        .btn-modo:active { transform: scale(0.98); }
+
+        /* Contenedor Especial de Ayas Dinámicas */
+        .contenedor-ayas-home {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid var(--lila-medio);
+            position: relative;
         }
 
-        .btn-embarazo {
-            background-color: var(--lila-medio);
-            color: white;
-            box-shadow: 0 4px 15px rgba(216, 191, 216, 0.4);
+        .btn-cambiar-aya {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
         }
 
-        .btn-menopausia {
-            background-color: #C71585;
-            color: white;
-            box-shadow: 0 4px 15px rgba(199, 21, 133, 0.3);
-        }
-
-        .btn-hadiths-principal {
-            background: linear-gradient(135deg, #FFF8DC 0%, #FFE4B5 100%);
-            color: var(--texto);
-            box-shadow: 0 4px 15px rgba(245, 222, 179, 0.5);
-            border: 1px solid #DEB887;
-        }
-
-        .btn-modo:active {
-            transform: scale(0.98);
-        }
-
+        /* Grid de Estados */
         .grid-estados {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -148,13 +166,11 @@
             cursor: pointer;
             font-size: 14px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: background-color 0.2s, border-color 0.2s;
         }
 
-        /* Clase aplicada dinámicamente al seleccionar */
         .btn-estado.selected {
             background-color: var(--rosa-activo) !important;
-            border-color: var(--rosa-medio);
+            border-color: var(--rosa-medio) !important;
         }
 
         .card-contenido {
@@ -166,183 +182,81 @@
             display: none;
         }
 
-        .arabe {
-            font-size: 22px;
-            text-align: center;
-            margin-bottom: 15px;
-            color: #2c2c2c;
-            line-height: 1.8;
-            direction: rtl;
-        }
+        .arabe { font-size: 22px; text-align: center; margin-bottom: 15px; color: #2c2c2c; line-height: 1.8; direction: rtl; }
+        .transliteracion { font-style: italic; font-size: 14px; margin-bottom: 10px; color: #555; text-align: center; }
+        .traduccion { font-size: 14px; margin-bottom: 15px; font-weight: 500; text-align: center; }
+        .divider { height: 1px; background: #E6E6FA; margin: 15px 0; }
+        .frase-motivacional { font-size: 14px; color: var(--lila-oscuro); font-weight: 600; line-height: 1.4; background: var(--rosa-pastel); padding: 12px; border-radius: 8px; border-left: 4px solid var(--rosa-medio); }
 
-        .transliteracion {
-            font-style: italic;
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: #555;
-            text-align: center;
-        }
-
-        .traduccion {
-            font-size: 14px;
-            margin-bottom: 15px;
-            font-weight: 500;
-            text-align: center;
-        }
-
-        .divider {
-            height: 1px;
-            background: #E6E6FA;
-            margin: 15px 0;
-        }
-
-        .frase-motivacional {
-            font-size: 14px;
-            color: var(--lila-oscuro);
-            font-weight: 600;
-            line-height: 1.4;
-            background: var(--rosa-pastel);
-            padding: 12px;
-            border-radius: 8px;
-            border-left: 4px solid var(--rosa-medio);
-        }
-
-        .dhikr-container {
-            text-align: center;
-            padding: 15px 0;
-        }
-
-        .counter-display {
-            font-size: 48px;
-            font-weight: bold;
-            color: var(--lila-oscuro);
-            margin: 10px 0;
-        }
-
-        /* Contenedor del Tasbih con margen corregido para evitar cortes */
+        /* Estilos del Tasbih / Botón de pulsa */
+        .dhikr-container { text-align: center; padding: 15px 0; }
+        .counter-display { font-size: 48px; font-weight: bold; color: var(--lila-oscuro); margin: 10px 0; }
+        
         .tasbih-wrapper {
-            margin: 25px auto;
-            padding-bottom: 10px;
+            margin: 20px auto;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 140px;
         }
 
-        .circle-btn {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
+        /* Formas del Tasbih */
+        .shape-digital { width: 140px; height: 90px; border-radius: 8px; background: #222; color: #0f0; font-family: monospace; font-size: 24px; border: 4px solid #555; }
+        .shape-bolas { width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, var(--rosa-medio) 20%, var(--lila-medio) 70%); border: 4px dotted var(--lila-oscuro); color: white; font-size: 18px; }
+        
+        .shape-corazon {
+            width: 100px;
+            height: 90px;
+            position: relative;
+            background: var(--rosa-medio);
             border: none;
-            background: linear-gradient(135deg, var(--rosa-medio) 0%, var(--lila-medio) 100%);
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 6px 20px rgba(216, 191, 216, 0.6);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.1s;
+            transform: rotate(0deg);
+            margin-top: 20px;
         }
+        .shape-corazon:before, .shape-corazon:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 90px;
+            border-radius: 50% 50% 0 0;
+            background: var(--rosa-medio);
+        }
+        .shape-corazon:before { left: 50px; }
+        .shape-corazon:after { left: 0; transform: rotate(-90deg); transform-origin: 0 100%; }
+        .shape-corazon span { z-index: 10; position: relative; }
 
-        .circle-btn:active {
-            transform: scale(0.95);
-        }
+        .audio-item { background: white; padding: 15px; border-radius: 12px; margin: 10px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        .audio-item p { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+        audio { width: 100%; height: 35px; }
+        .btn-link-yt { display: block; text-align: center; background: #FF0000; color: white; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; margin: 10px 0; font-size: 14px; }
 
-        .select-dhikr {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--lila-medio);
-            margin-bottom: 15px;
-            color: var(--texto);
-            font-size: 14px;
-        }
+        /* Calendario */
+        .select-cal { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--lila-medio); margin-bottom: 10px; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-top: 10px; text-align: center; }
+        .cal-day { padding: 8px 2px; background: white; border-radius: 6px; font-size: 12px; cursor: pointer; border: 1px solid #eee; }
+        .cal-day.active-mens { background-color: var(--rosa-medio) !important; color: white; }
+        .cal-day.active-emb { background-color: var(--lila-medio) !important; color: white; }
+        .cal-day.active-post { background-color: #C71585 !important; color: white; }
 
-        .audio-item {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 10px 0;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-        }
-
-        .audio-item p {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        audio {
-            width: 100%;
-            height: 35px;
-        }
-
-        .btn-link-yt {
-            display: block;
-            text-align: center;
-            background: #FF0000;
-            color: white;
-            padding: 12px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            margin: 10px 0;
-            font-size: 14px;
-        }
-
-        .input-ajustes {
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid var(--lila-medio);
-            margin-top: 8px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .nav-tabs {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 25px;
-            border-top: 1px solid rgba(0,0,0,0.05);
-            padding-top: 15px;
-        }
-
-        .tab-icon {
-            background: none;
-            border: none;
-            color: #A090A0;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .tab-icon.active {
-            color: var(--lila-oscuro);
-        }
-
-        .btn-back {
-            background: none;
-            border: none;
-            color: var(--lila-oscuro);
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+        .nav-tabs { display: flex; justify-content: space-around; margin-top: 25px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 15px; }
+        .tab-icon { background: none; border: none; color: #A090A0; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-icon.active { color: var(--lila-oscuro); }
+        .btn-back { background: none; border: none; color: var(--lila-oscuro); font-weight: bold; cursor: pointer; margin-bottom: 15px; display: flex; align-items: center; gap: 5px; }
+        .input-ajustes { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--lila-medio); margin-top: 5px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <button id="btn-top-cal" class="btn-top-calendario" onclick="navegar('calendario')">📅 Calendario</button>
         <button class="ranking-top-btn" onclick="navegar('ranking')">🏆 Ranking</button>
 
         <header>
@@ -352,23 +266,23 @@
 
         <div id="screen-inicio" class="screen active">
             <h3 id="main-question" style="text-align: center; margin-bottom: 15px;">¿Cómo te encuentras hoy, hermana?</h3>
-            <button id="btn-modo-mens" class="btn-modo btn-menstruacion" onclick="cambiarModo('menstruacion')">
-                🩸 Menstruación o Postparto
-            </button>
-            <button id="btn-modo-emb" class="btn-modo btn-embarazo" onclick="cambiarModo('embarazo')">
-                🤰 Embarazo
-            </button>
-            <button id="btn-modo-meno" class="btn-modo btn-menopausia" onclick="cambiarModo('menopausia')">
-                🍂 Menopausia u Madurez
-            </button>
-            
-            <button id="btn-modo-hadiths" class="btn-modo btn-hadiths-principal" onclick="cambiarModo('hadiths')">
-                🍯 Hadiths de Curación y Medicina
-            </button>
+            <button id="btn-modo-mens" class="btn-modo btn-menstruacion" onclick="cambiarModo('menstruacion')">🩸 Menstruación o Postparto</button>
+            <button id="btn-modo-emb" class="btn-modo btn-embarazo" onclick="cambiarModo('embarazo')">🤰 Embarazo</button>
+            <button id="btn-modo-meno" class="btn-modo btn-menopausia" onclick="cambiarModo('menopausia')">🍂 Menopausia u Madurez</button>
+            <button id="btn-modo-gen" class="btn-modo btn-general" onclick="cambiarModo('general')">🌸 Estado General</button>
+
+            <div class="contenedor-ayas-home">
+                <button class="btn-cambiar-aya" onclick="rotarAya()">🔄</button>
+                <div id="aya-home-texto" style="text-align: center; font-weight: 600; font-size: 14px; margin-top: 15px; color: var(--lila-oscuro);"></div>
+                <div id="aya-home-fuente" style="text-align: center; font-size: 11px; color: #777; margin-top: 5px; font-style: italic;"></div>
+            </div>
+
+            <div class="divider"></div>
+            <button class="btn-modo" style="background: #FFF8DC; color: #4A374A; border: 1px solid #DEB887;" onclick="cambiarModo('hadiths')">🍯 Hadiths de Curación y Medicina Propética</button>
         </div>
 
         <div id="screen-estados" class="screen">
-            <button id="btn-back" class="btn-back" onclick="volverInicio()">← Cambiar de modo</button>
+            <button id="btn-back" class="btn-back" onclick="volverInicio()">← Volver al inicio</button>
             <h3 id="titulo-modo" style="margin-bottom: 10px;">Estados</h3>
             <p id="subtitle-estado" class="subtitle">Selecciona tu estado actual:</p>
             
@@ -388,30 +302,11 @@
             <h3 id="quran-title" style="margin-bottom: 10px;">Escucha el Qur'an y Cálmate</h3>
             <p id="quran-subtitle" class="subtitle" style="margin-bottom: 15px;">Permite que las palabras de Allah calmen tu cuerpo y tu mente. Recuerda que solo Allah es Quien cura.</p>
             
-            <div class="audio-item">
-                <p>Surah Yasin - Abdul Rahman Al-Ossi</p>
-                <audio controls src="https://server6.mp3quran.net/aloosi//036.mp3"></audio>
-            </div>
-
-            <div class="audio-item">
-                <p>Surah Ghafir - Reuayat Hafs</p>
-                <audio controls src="https://server16.mp3quran.net/a_bukhari/Rewayat-Hafs-A-n-Assem//040.mp3"></audio>
-            </div>
-
-            <div class="audio-item">
-                <p>Surah Maryam - Raad Al Kurdi</p>
-                <audio controls src="https://server6.mp3quran.net/kurdi//019.mp3"></audio>
-            </div>
-
-            <div class="audio-item">
-                <p>Surah Ta-Ha - Abdulaziz Asiri</p>
-                <audio controls src="https://server16.mp3quran.net/abdulazizasiri/Rewayat-Hafs-A-n-Assem//020.mp3"></audio>
-            </div>
-
-            <div class="audio-item">
-                <p>Surah Al-Mulk - Abdulaziz Asiri</p>
-                <audio controls src="https://server16.mp3quran.net/abdulazizasiri/Rewayat-Hafs-A-n-Assem//067.mp3"></audio>
-            </div>
+            <div class="audio-item"><p>Surah Yasin - Abdul Rahman Al-Ossi</p><audio controls src="https://server6.mp3quran.net/aloosi//036.mp3"></audio></div>
+            <div class="audio-item"><p>Surah Ghafir - Reuayat Hafs</p><audio controls src="https://server16.mp3quran.net/a_bukhari/Rewayat-Hafs-A-n-Assem//040.mp3"></audio></div>
+            <div class="audio-item"><p>Surah Maryam - Raad Al Kurdi</p><audio controls src="https://server6.mp3quran.net/kurdi//019.mp3"></audio></div>
+            <div class="audio-item"><p>Surah Ta-Ha - Abdulaziz Asiri</p><audio controls src="https://server16.mp3quran.net/abdulazizasiri/Rewayat-Hafs-A-n-Assem//020.mp3"></audio></div>
+            <div class="audio-item"><p>Surah Al-Mulk - Abdulaziz Asiri</p><audio controls src="https://server16.mp3quran.net/abdulazizasiri/Rewayat-Hafs-A-n-Assem//067.mp3"></audio></div>
 
             <div class="divider"></div>
             <a href="https://youtu.be/TjTfJaZVGMs?is=_GFv2DVa_b9iiqSp" target="_blank" class="btn-link-yt" id="yt-link-1">▶ Versos de Sanación (YouTube)</a>
@@ -420,9 +315,22 @@
 
         <div id="screen-dhikr" class="screen">
             <h3 id="dhikr-title" style="margin-bottom: 5px;">Contador de Dhikr</h3>
-            <p id="dhikr-subtitle" class="subtitle" style="margin-bottom: 15px;">Mantén tu lengua húmeda con el recuerdo de Allah.</p>
+            <p id="dhikr-subtitle" class="subtitle" style="margin-bottom: 10px;">Mantén tu lengua húmeda con el recuerdo de Allah.</p>
             
             <div class="dhikr-container">
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <select id="select-shape" class="select-dhikr" style="margin-bottom:0;" onchange="cambiarFormaTasbih()">
+                        <option value="classic">Forma: Clásica</option>
+                        <option value="digital">Forma: Tasbih Digital</option>
+                        <option value="bolas">Forma: Tasbih de Bolas</option>
+                        <option value="corazon">Forma: Corazón</option>
+                    </select>
+                    <select id="select-modo-dhikr" class="select-dhikr" style="margin-bottom:0;" onchange="cambiarModoCombinado()">
+                        <option value="simple">Modo: Libre / Simple</option>
+                        <option value="combinado">Modo: Combinado (Sunnah)</option>
+                    </select>
+                </div>
+
                 <select id="select-dhikr" class="select-dhikr" onchange="resetContador()">
                     <option value="SubhanAllah">SubhanAllah (سُبْحَانَ اللَّهِ)</option>
                     <option value="Alhamdulillah">Alhamdulillah (الْحَمْدُ لِلَّهِ)</option>
@@ -431,49 +339,69 @@
                 </select>
 
                 <div class="counter-display" id="contador-puntos">0</div>
+                
                 <div class="tasbih-wrapper">
-                    <button class="circle-btn" id="btn-pulsar" onclick="incrementarDhikr()">Pulsar</button>
+                    <button class="circle-btn" id="btn-pulsar" onclick="incrementarDhikr()"><span>Pulsar</span></button>
                 </div>
+                
                 <p id="mensaje-logro" style="color: green; font-weight: bold; font-size: 14px; margin-top: 10px; min-height: 20px;"></p>
             </div>
         </div>
 
-        <div id="screen-ajustes" class="screen">
-            <h3 id="settings-title" style="margin-bottom: 10px;">Ajustes de la App</h3>
-            <p class="subtitle" style="margin-bottom: 15px;">Personaliza tu experiencia e idioma.</p>
+        <div id="screen-calendario" class="screen">
+            <button class="btn-back" onclick="volverInicio()">← Volver</button>
+            <h3>📅 Registro de Estados de Salud</h3>
+            <p class="subtitle" style="margin-bottom: 15px;">Selecciona el estado que deseas registrar en los días correspondientes:</p>
             
-            <label style="font-size: 14px; font-weight: bold; margin-bottom: 5px; display: block;">Idioma / Language:</label>
-            <select id="select-lang" class="select-dhikr" onchange="cambiarIdiomaGlobal()">
+            <select id="cal-tipo-registro" class="select-cal">
+                <option value="mens">🩸 Menstruación</option>
+                <option value="emb">🤰 Embarazo</option>
+                <option value="post">🍼 Postparto</option>
+            </select>
+
+            <div class="cal-grid" id="cal-grid-dias"></div>
+        </div>
+
+        <div id="screen-ranking" class="screen">
+            <button class="btn-back" onclick="volverInicio()">← Volver</button>
+            <h3>🏆 Ranking Semanal</h3>
+            <div style="background: white; border-radius:12px; padding: 10px; text-align: center; margin: 10px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
+                <span style="font-size: 16px; font-weight: bold; color: #FF8C00;">⭐ <span id="star-cycles">0</span> ciclos hechos</span>
+            </div>
+            <div style="background: white; border-radius: 16px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                <p style="padding: 6px 0; border-bottom: 1px solid #eee;">🥇 <strong>Malak_R:</strong> 1,890 Dhikr</p>
+                <p style="padding: 6px 0; border-bottom: 1px solid #eee;">🥈 <strong>Aisha_T:</strong> 1,210 Dhikr</p>
+                <p style="padding: 6px 0;">🥉 <strong id="rank-name">Tú (Hermana)</strong>: <span id="rank-pts">0</span> Dhikr</p>
+            </div>
+        </div>
+
+        <div id="screen-ajustes" class="screen">
+            <h3>⚙️ Ajustes de la App</h3>
+            <div class="divider"></div>
+            
+            <label style="font-size: 14px; font-weight: bold;">Tu Nombre:</label>
+            <input type="text" id="input-username" class="input-ajustes" placeholder="Escribe tu nombre..." oninput="guardarNombre()">
+
+            <label style="font-size: 14px; font-weight: bold; display:block; margin-bottom:5px;">Idioma / Language:</label>
+            <select id="select-lang" class="select-cal" onchange="cambiarIdiomaGlobal()">
                 <option value="es">Español</option>
                 <option value="en">English</option>
                 <option value="ar">العربية</option>
             </select>
 
-            <label style="font-size: 14px; font-weight: bold; margin-bottom: 5px; display: block;">Tu Nombre de Usuario:</label>
-            <input type="text" id="input-username" class="input-ajustes" placeholder="Escribe tu nombre..." oninput="guardarNombreUsuario()">
-        </div>
-
-        <div id="screen-ranking" class="screen">
-            <button class="btn-back" onclick="volverInicio()">← Volver</button>
-            <h3 style="margin-bottom: 5px;">🏆 Ranking Semanal de Dhikr</h3>
-            <p id="rank-info-text" class="subtitle" style="margin-bottom: 15px;">Progreso de todas las chicas de la comunidad.</p>
-            
-            <div style="background: white; border-radius:12px; padding: 10px; text-align: center; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
-                <span style="font-size: 18px; font-weight: bold; color: #FF8C00;">⭐ <span id="star-cycles-count">0</span> ciclos hechos</span>
-            </div>
-
-            <div style="background: white; border-radius: 16px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                <p style="padding: 6px 0; border-bottom: 1px solid #eee;">🥇 <strong>Malak_R:</strong> 1,890 Dhikr</p>
-                <p style="padding: 6px 0; border-bottom: 1px solid #eee;">🥈 <strong>Aisha_T:</strong> 1,210 Dhikr</p>
-                <p style="padding: 6px 0;">🥉 <strong id="rank-display-name">Tú (Hermana)</strong>: <span id="rank-display-points">0</span> Dhikr</p>
-            </div>
+            <label style="font-size: 14px; font-weight: bold; display:block; margin-bottom:5px;">Cambiar Color de la App (Pastel):</label>
+            <select id="select-color-tema" class="select-cal" onchange="cambiarTemaColor()">
+                <option value="rosa">Rosa Pastel 🌸</option>
+                <option value="lila">Lila Pastel 🪻</option>
+                <option value="azul">Azul Claro Pastel 🩵</option>
+            </select>
         </div>
 
         <nav class="nav-tabs">
             <button class="tab-icon active" id="tab-home" onclick="navegar('home')">🏠<br><span id="nav-start">Inicio</span></button>
             <button class="tab-icon" id="tab-quran" onclick="navegar('quran')">🎧<br><span id="nav-audio">Audio</span></button>
             <button class="tab-icon" id="tab-dhikr" onclick="navegar('dhikr')">📿<br><span id="nav-dhikr">Dhikr</span></button>
-            <button class="tab-icon" id="tab-ajustes" onclick="navegar('ajustes')">⚙️<br><span id="nav-settings">Ajustes</span></button>
+            <button class="tab-icon" id="tab-ajustes" onclick="navegar('ajustes')">⚙️<br><span>Ajustes</span></button>
         </nav>
     </div>
 
@@ -483,243 +411,126 @@
 
         let modoActual = '';
         let puntosDhikr = 0;
-        let ciclosCompletados = 0;
+        let estrellasContador = 0;
         let idiomaActual = 'es';
-        let nombreUsuario = 'Hermana';
+        let nombreUser = 'Hermana';
+        let ayaIndice = 0;
 
-        // Recuperar nombre del almacenamiento local si ya existía
-        if(localStorage.getItem('nisat_username')) {
-            nombreUsuario = localStorage.getItem('nisat_username');
-        }
-        if(localStorage.getItem('nisat_stars')) {
-            ciclosCompletados = parseInt(localStorage.getItem('nisat_stars'));
-        }
+        // Ayas completas solicitadas
+        const ayasComunidad = [
+            { texto: '"No temas, porque en verdad Yo estoy con vosotros, escuchando y viendo".', fuente: "Sura Ta-Ha (20:46)" },
+            { texto: '"Porque, en verdad, con la dificultad vendrá la facilidad. Ciertamente, con la dificultad vendrá la facilidad".', fuente: "Sura Ash-Sharh (94:5-6)" },
+            { texto: '"Tu Señor no te ha abandonado ni te aborrece. Y ten por seguro que la otra vida será mejor para ti que esta primera".', fuente: "Sura Ad-Duha (93:3-5)" },
+            { texto: '"¡Oh, creyentes! Buscad ayuda en la paciencia y en la oración. En verdad, Alá está con los pacientes".', fuente: "Sura Al-Baqarah (2:153)" },
+            { texto: '"No te entristezcas, porque Alá está con nosotros". (La tahzan inna Allah ma\'ana)', fuente: "Sura At-Tawbah (9:40)" },
+            { texto: '"Alá no impone a ninguna alma una carga mayor de la que puede soportar".', fuente: "Sura Al-Baqarah (2:286)" },
+            { texto: '"Solo expongo mi queja y mi lamento ante Alá".', fuente: "Sura Yusuf (12:86)" }
+        ];
 
         const traduccionesInterfaz = {
-            es: {
-                subtitle: "Tu espacio de calma y recuerdo diario",
-                question: "¿Cómo te encuentras hoy, hermana?",
-                mens: "🩸 Menstruación o Postparto",
-                emb: "🤰 Embarazo",
-                meno: "🍂 Menopausia u Madurez",
-                hadiths: "🍯 Hadiths de Curación y Medicina",
-                back: "← Cambiar de modo",
-                subEstado: "Selecciona tu estado actual:",
-                quranTitle: "Escucha el Qur'an y Cálmate",
-                quranSub: "Permite que las palabras de Allah calmen tu cuerpo y tu mente. Recuerda que solo Allah es Quien cura.",
-                dhikrTitle: "Contador de Dhikr",
-                dhikrSub: "Mantén tu lengua húmeda con el recuerdo de Allah.",
-                pulsar: "Pulsar",
-                navStart: "Inicio",
-                navAudio: "Audio",
-                navDhikr: "Dhikr",
-                navSettings: "Ajustes",
-                logro: "¡Mashallah hermana! Has completado repeticiones.",
-                yt1: "▶ Versos de Sanación (YouTube)",
-                yt2: "▶ Suras para Calmarte (YouTube)"
-            },
-            en: {
-                subtitle: "Your space of calm and daily remembrance",
-                question: "How are you feeling today, sister?",
-                mens: "🩸 Menstruation or Postpartum",
-                emb: "🤰 Pregnancy",
-                meno: "🍂 Menopause or Maturity",
-                hadiths: "🍯 Hadiths of Healing & Medicine",
-                back: "← Change mode",
-                subEstado: "Select your current state:",
-                quranTitle: "Listen to the Qur'an and Calm Down",
-                quranSub: "Allow the words of Allah to calm your body and mind. Remember that only Allah is the One Who heals.",
-                dhikrTitle: "Dhikr Counter",
-                dhikrSub: "Keep your tongue moist with the remembrance of Allah.",
-                pulsar: "Tap",
-                navStart: "Home",
-                navAudio: "Audio",
-                navDhikr: "Dhikr",
-                navSettings: "Settings",
-                logro: "Mashallah sister! You completed repetitions.",
-                yt1: "▶ Healing Verses (YouTube)",
-                yt2: "▶ Surahs to Calm You (YouTube)"
-            },
-            ar: {
-                subtitle: "مساحتكِ الخاصّة للهدوء والذِّكر اليومي",
-                question: "كيف تجدين نفسكِ اليوم يا أختي؟",
-                mens: "🩸 الحيض أو النفاس",
-                emb: "🤰 الحمل",
-                meno: "🍂 سن الأمل والنضج",
-                hadiths: "🍯 أحاديث الشفاء والطب النبوي",
-                back: "← تغيير الوضع",
-                subEstado: "اختاري حالتكِ الحالية:",
-                quranTitle: "استمعي إلى القرآن واطمئني",
-                quranSub: "دعي كلمات الله تهدئ جسدكِ وعقلكِ. تذكري أن الله وحده هو الشافي.",
-                dhikrTitle: "عداد الأذكار",
-                dhikrSub: "اجعلي لسانكِ رطبًا بذكر الله.",
-                pulsar: "اضغطي",
-                navStart: "الرئيسية",
-                navAudio: "الصوتيات",
-                navDhikr: "الأذكار",
-                navSettings: "الإعدادات",
-                logro: "ما شاء الله يا أختي! لقد أكملتِ من الأذكار.",
-                yt1: "▶ آيات الشفاء (يوتيوب)",
-                yt2: "▶ سور لطمأنينة القلب (يوتيوب)"
-            }
+            es: { subtitle: "Tu espacio de calma y recuerdo diario", question: "¿Cómo te encuentras hoy, hermana?", mens: "🩸 Menstruación o Postparto", emb: "🤰 Embarazo", meno: "🍂 Menopausia u Madurez", back: "← Cambiar de modo", subEstado: "Selecciona tu estado actual:", quranTitle: "Escucha el Qur'an y Cálmate", quranSub: "Permite que las palabras de Allah calmen tu cuerpo y tu mente. Recuerda que solo Allah es Quien cura.", dhikrTitle: "Contador de Dhikr", dhikrSub: "Mantén tu lengua húmeda con el recuerdo de Allah.", pulsar: "Pulsar", navStart: "Inicio", navAudio: "Audio", navDhikr: "Dhikr", logro: "¡Mashallah hermana! Has completado repeticiones.", yt1: "▶ Versos de Sanación (YouTube)", yt2: "▶ Suras para Calmarte (YouTube)" },
+            en: { subtitle: "Your space of calm and daily remembrance", question: "How are you feeling today, sister?", mens: "🩸 Menstruation or Postpartum", emb: "🤰 Pregnancy", meno: "🍂 Menopause or Maturity", back: "← Change mode", subEstado: "Select your current state:", quranTitle: "Listen to the Qur'an and Calm Down", quranSub: "Allow the words of Allah to calm your body and mind. Remember that only Allah is the One Who heals.", dhikrTitle: "Dhikr Counter", dhikrSub: "Keep your tongue moist with the remembrance of Allah.", pulsar: "Tap", navStart: "Home", navAudio: "Audio", navDhikr: "Dhikr", logro: "Mashallah sister! You completed repetitions.", yt1: "▶ Healing Verses (YouTube)", yt2: "▶ Surahs to Calm You (YouTube)" },
+            ar: { subtitle: "مساحتكِ الخاصّة للهدوء والذِّكر اليومي", question: "كيف تجدين نفسكِ اليوم يا أختي؟", mens: "🩸 الحيض أو النفاس", emb: "🤰 الحمل", meno: "🍂 سن الأمل والنضج", back: "← تغيير الوضع", subEstado: "اختاري حالتكِ الحالية:", quranTitle: "استمعي إلى القرآن واطمئني", quranSub: "دعي كلمات الله تهدئ جسدكِ وعقلكِ. تذكري أن الله وحده هو الشافي.", dhikrTitle: "عداد الأذكار", dhikrSub: "اجعلي لسانكِ رطبًا بذكر الله.", pulsar: "اضغطي", navStart: "الرئيسية", navAudio: "الصوتيات", navDhikr: "الأذكار", logro: "ما شاء الله يا أختي! لقد أكملتِ من الأذكار.", yt1: "▶ آيات الشفاء (يوتيوب)", yt2: "▶ سور لطمأنينة القلب (يوتيوب)" }
         };
 
-        // Estructura original sumando la sección Hadiths perfectamente integrada
         const datos = {
             menstruacion: {
                 titulos: { es: "🩸 Menstruación y Postparto", en: "🩸 Menstruation & Postpartum", ar: "🩸 الحيض أو النفاس" },
                 estados: [
-                    {
-                        nombres: { es: "Con Dolor Físico", en: "In Physical Pain", ar: "ألم جسدي" },
-                        instrucciones: { es: "(Coloca tu mano derecha en el lugar donde sientes el dolor y repite)", en: "(Place your right hand on the place where you feel pain and repeat)", ar: "(ضعي يدكِ اليمنى على مكان الألم ورددي)" },
-                        arabe: "بِسْمِ اللَّهِ (x3) • أَعُوذُ بِاللَّه ِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (x7)",
-                        trans: "Bismillah (3 times). A'udhu billahi wa qudratihi min sharri ma ajidu wa uhadhir (7 times).",
-                        trads: { es: "En el nombre de Allah. Me refugio en Allah y en Su poder contra el mal de lo que encuentro y de lo que temo.", en: "In the name of Allah. I seek refuge in Allah and in His power from the evil of what I find and of what I guard against.", ar: "" },
-                        frases: { es: "Hermana, cada puntada de dolor que sientes en tu cuerpo en este momento está borrando tus faltas y purificando tu alma. Tu paciencia ante el dolor es una hermosa forma de adoración. Solo Allah es Quien cura y alivia.", en: "Sister, every pinch of pain you feel in your body right now is erasing your sins and purifying your soul. Your patience through pain is a beautiful form of worship. Only Allah is the One Who heals and relieves.", ar: "يا أختي، كل ألم تشعرين به في جسدكِ الآن يكفر عن خطاياكِ ويطهر روحكِ. صبركِ على الألم هو عبادة جميلة. الله وحده هو الشافي والمخفف." }
-                    },
-                    {
-                        nombres: { es: "Triste / Sensible", en: "Sad / Sensitive", ar: "حزن / حساسية" },
-                        instrucciones: { es: "", en: "", ar: "" },
-                        arabe: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ",
-                        trans: "Allahumma inni 'a'udhu bika minal-hammi wal-hazan.",
-                        trads: { es: "¡Oh Allah! Me refugio en Ti de la ansiedad y de la tristeza.", en: "O Allah, I seek refuge in You from anxiety and sorrow.", ar: "" },
-                        frases: { es: "Tus hormonas pueden hacer que tu pecho se sientan apretado hoy, pero Allah conoce la pureza de tu corazón. Tu llanto y tu vulnerabilidad no te hacen débil ante Él. Descansa en Su amor y recuerda que este estado pasará.", en: "Your hormones might make your chest feel tight today, but Allah knows the purity of your heart. Your tears and vulnerability do not make you weak to Him. Rest in His love and remember this will pass.", ar: "قد تجعل التغيرات الهرمونية صدركِ ضيقًا اليوم، لكن الله يعلم طهر قلبكِ. بكاؤكِ وحساسيتكِ لا يجعلاكِ ضعيفة أمامه. اطمئني في حفظه وتذكري أن هذا الحال سيزول." }
-                    },
-                    {
-                        nombres: { es: "Estresada / Abrumada", en: "Stressed / Overwhelmed", ar: "قلق / ضغط" },
-                        instrucciones: { es: "", en: "", ar: "" },
-                        arabe: "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ",
-                        trans: "Hasbiyallahu la ilaha illa Huwa, 'alayhi tawakkaltu, wa Huwa Rabbul-'Arshil-'Adhim.",
-                        trads: { es: "Me basta Allah, no hay más divinidad salvo Él. En Él me encomiendo, y Él es el Señor del Trono Grandioso.", en: "Sufficient for me is Allah; there is no deity except Him. On Him I have relied, and He is the Lord of the Great Throne.", ar: "" },
-                        frases: { es: "Suelta el control de las cosas que no puedes cambiar hoy. El Creador del universo está a cargo de tus asuntos. Respira hondo y confía en que Allah se encargará de todo y te dará una salida.", en: "Let go of the control over things you cannot change today. The Creator of the universe is in charge of your affairs. Take a deep breath and trust that Allah will take care of everything and grant you a way out.", ar: "اتركي التحكم في الأشياء التي لا يمكنكِ تغييرها اليوم. خالق الكون يتولى شؤونكِ. تنفسي بعمق وثقي أن الله سيصلح كل شيء ويجعل لكِ مخرجًا." }
-                    },
-                    {
-                        nombres: { es: "Enfadada / Irritada", en: "Angry / Irritated", ar: "غضب / انزعاج" },
-                        instrucciones: { es: "", en: "", ar: "" },
-                        arabe: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
-                        trans: "A'udhu billahi minash-shaitanir-rajim.",
-                        trads: { es: "Me refugio en Allah del demonio maldito.", en: "I seek refuge in Allah from Satan, the expelled.", ar: "" },
-                        frases: { es: "El enfado es una tormenta que nubla tu paz. Cuando sientas que vas a estallar, guarda silencio, busca refugio en Allah y recuerda que controlar tu temperamento hoy es una inmensa victoria para tu alma.", en: "Anger is a storm that clouds your peace. When you feel like exploding, stay silent, seek refuge in Allah, and remember that controlling your temper today is an immense victory for your soul.", ar: "الغضب عاصفة تحجب سلامكِ الداخلي. عندما تشعرين بالانفجار، التزمي الصمت، واستعيذي بالله، وتذكري أن كظم غيظكِ اليوم هو انتصار عظيم لروحكِ." }
-                    }
+                    { nombres: { es: "Con Dolor Físico", en: "In Physical Pain", ar: "ألم جسدي" }, instrucciones: { es: "(Coloca tu mano derecha en el lugar donde sientes el dolor y repite)", en: "(Place your right hand on the place where you feel pain and repeat)", ar: "(ضعي يدكِ اليمنى على مكان الألم ورددي)" }, arabe: "بِسْمِ اللَّهِ (x3) • أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (x7)", trans: "Bismillah (3 times). A'udhu billahi wa qudratihi min sharri ma ajidu wa uhadhir (7 times).", trads: { es: "En el nombre de Allah. Me refugio en Allah y en Su poder contra el mal de lo que encuentro y de lo que temo.", en: "In the name of Allah. I seek refuge in Allah and in His power from the evil of what I find and of what I guard against.", ar: "" }, frases: { es: "Hermana, cada puntada de dolor que sientes en tu cuerpo en este momento está borrando tus faltas y purificando tu alma.", en: "Sister, every pinch of pain you feel in your body right now is erasing your sins.", ar: "يا أختي، كل ألم تشعرين به في جسدكِ الآن يكفر عن خطاياكِ." } }
                 ]
             },
             embarazo: {
                 titulos: { es: "🤰 Modo Embarazo", en: "🤰 Pregnancy Mode", ar: "🤰 الحمل" },
                 estados: [
-                    {
-                        nombres: { es: "Náuseas o Cansancio", en: "Nausea or Fatigue", ar: "غثيان أو تعب" },
-                        instrucciones: { es: "", en: "", ar: "" },
-                        arabe: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي",
-                        trans: "Allahumma 'afini fi badani, Allahumma 'afini fi sam'i, Allahumma 'afini fi basari.",
-                        trads: { es: "¡Oh Allah! Sana mi cuerpo, ¡Oh Allah! Sana mi oído, ¡Oh Allah! Sana mi vista.", en: "O Allah, make my body healthy, O Allah, make my hearing healthy, O Allah, make my sight healthy.", ar: "" },
-                        frases: { es: "Cada malestar, cada náusea y cada minuto de cansancio físico que experimentas es recompensado por Allah. Estás albergando un milagro en tu vientre; descansa y confía en que solo Allah te devuelve las fuerzas.", en: "Every discomfort, every nausea, and every minute of physical fatigue you experience is rewarded by Allah. You are carrying a miracle in your womb; rest and trust that only Allah restores your strength.", ar: "كل مشقة، وكل غثيان، وكل دقيقة تعب جسدي تمرين بها مأجورة عليها عند الله. أنتِ تحملين معجزة في أحشائكِ؛ استريحي وثقي أن الله وحده هو من يعيد إليكِ قوتكِ." }
-                    },
-                    {
-                        nombres: { es: "Dua para mi Bebé", en: "Dua for my Baby", ar: "دعاء لجنيني" },
-                        instrucciones: { es: "", en: "", ar: "" },
-                        arabe: "رَبِّ هَبْ لِي مِنْ لَدُنْكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ",
-                        trans: "Rabbi hab li min ladunka dhurriyatan tayyibatan, innaka sami'ud-du'a.",
-                        trads: { es: "¡Señor mío! Concédeme de Tu parte una descendencia buena y virtuosa. Tú eres, en verdad, Quien escucha los ruegos.", en: "My Lord, grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication.", ar: "" },
-                        frases: { es: "La dua de una madre no tiene barreras. Pide por el futuro, la fe y la salud de tu bebé desde ahora. Allah escucha cada uno de los latidos de su pequeño corazón y tus sinceros anhelos.", en: "A mother's dua has no barriers. Pray for your baby's future, faith, and health starting now. Allah hears every beat of that tiny heart and all your sincere wishes.", ar: "دعاء الأم ليس بينه وبين الله حجاب. ادعي لمستقبل طفلكِ، وإيمانه، وصحته من الآن. الله يسمع نبضات هذا القب الصغير وأمنياتكِ الصادقة." }
-                    },
-                    {
-                        nombres: { es: "Miedo al Parto", en: "Fear of Labor", ar: "خوف من الولادة" },
-                        instrucciones: { es: "", en: "", ar: "" },
-                        arabe: "اللَّهُمَّ لَا سَهْلَ إِلَّا مَا جَعَلْتَهُ سَهْلًا، وَأَنْتَ تَجْعَلُ الْحَزْنَ إِذَا شِئْتَ سَهْلًا",
-                        trans: "Allahumma la sahla illa ma ja'altahu sahla, wa Anta taj'alul-hazna idha shi'ta sahla.",
-                        trads: { es: "¡Oh Allah! No hay facilidad excepto lo que Tú haces fácil, y Tú haces que la dificultad se vuelva fácil si así lo deseas.", en: "O Allah, there is no ease except in what You have made easy, and You make the difficulty easy if You wish.", ar: "" },
-                        frases: { es: "El mismo Creador que sostiene los cielos sin pilares es Quien guiará y facilitará tu parto. No estás sola; tu cuerpo fue diseñado con sabiduría divina para esto. Entrégale tus miedos a Allah.", en: "The same Creator who upholds the heavens without pillars is the One Who will guide and facilitate your labor. You are not alone; your body was designed with divine wisdom for this. Hand your fears over to Allah.", ar: "الخالق الذي يرفع السماوات بلا عمد هو الذي سيرشدكِ ويسهل ولادتكِ. لستِ وحدكِ; فقد صُمم جسدكِ بحكمة إلهية لهذا الأمر. سلمي مخاوفكِ لله." }
-                    }
+                    { nombres: { es: "Náuseas o Cansancio", en: "Nausea or Fatigue", ar: "غثيان أو تعب" }, instrucciones: { es: "", en: "", ar: "" }, arabe: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي", trans: "Allahumma 'afini fi badani, Allahumma 'afini fi sam'i, Allahumma 'afini fi basari.", trads: { es: "¡Oh Allah! Sana mi cuerpo, ¡Oh Allah! Sana mi oído, ¡Oh Allah! Sana mi vista.", en: "O Allah, make my body healthy.", ar: "" }, frases: { es: "Cada malestar, cada náusea y cada minuto de cansancio físico que experimentas es recompensado por Allah.", en: "Every discomfort you experience is rewarded by Allah.", ar: "كل مشقة، وكل غثيان تمرين بها مأجورة عليها عند الله." } }
                 ]
             },
             menopausia: {
                 titulos: { es: "🍂 Menopausia u Madurez", en: "🍂 Menopause & Maturity", ar: "🍂 سن الأمل والنضج" },
                 estados: [
-                    {
-                        nombres: { es: "Sofocos o Calores", en: "Hot Flashes", ar: "الهبات الساخنة" },
-                        instrucciones: { es: "", en: "", ar: "" },
-                        arabe: "اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ وَاشْفِ لَا شِفَاءَ إِلَّا شِفَاؤُكَ",
-                        trans: "Allahumma Rabban-nas, adhhibil-ba's, washfi La shifa'a illa shifa'uk.",
-                        trads: { es: "¡Oh Allah, Señor de la humanidad! Aleja el daño y cura, pues no hay más cura que Tu cura.", en: "O Allah, Lord of mankind, remove the harm and heal, for there is no cure but Your cure.", ar: "" },
-                        frases: { es: "Esos sofocos y calores repentinos cansan el cuerpo, pero recuerda que cada incomodidad física borra faltas del pasado. Solo Allah es Quien trae alivio y refresca tu cuerpo en los momentos difíciles.", en: "Those sudden hot flashes exhaust the body, but remember that every physical discomfort erases past mistakes. Only Allah is the One Who brings relief and refreshes your body in tough times.", ar: "تلك الهبات الساخنة والمفاجئة تجهد الجسد، لكن تذكري أن كل مشقة جسدية تكفر عن خطايا الماضي. الله وحده هو الذي يأتي بالفرج ويريح جسدكِ في الأوقات الصعبة." }
-                    },
-                    {
-                        nombres: { es: "Cambios de Humor", en: "Mood Swings", ar: "تقلبات المزاج" },
-                        instrucciones: { es: "", en: "", ar: "" },
-                        arabe: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَىٰ دِينِكَ",
-                        trans: "Ya Muqallibal-qulub, thabbit qalbi 'ala dinik.",
-                        trads: { es: "¡Oh Tu, Quien transforma los corazones! Mantén mi corazón firme en Tu religión.", en: "O Overturner of hearts, make my heart firm in Your religion.", ar: "" },
-                        frases: { es: "Los cambios hormonales en la madurez alteran las emociones, pero tu fe sigue intacta. No te sientas culpable por estar más sensible; Allah comprende perfectamente tu biología. Busca refugio en Su recuerdo.", en: "Hormonal changes in maturity alter your emotions, but your faith remains intact. Do not feel guilty for being more sensitive; Allah perfectly understands your biology. Seek refuge in His remembrance.", ar: "التغيرات الهرمونية في مرحلة النضج تغير المشاعر، لكن إيمانكِ يظل ثابتًا. لا تشعري بالذنب لأنكِ أكثر حساسية؛ فالله يفهم طبيعتكِ البيولوجية تمامًا. الجئي إلى ذكره." }
-                    }
+                    { nombres: { es: "Sofocos o Calores", en: "Hot Flashes", ar: "الهبات الساخنة" }, instrucciones: { es: "", en: "", ar: "" }, arabe: "اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ وَاشْفِ لَا شِفَاءَ إِلَّا شِفَاؤُكَ", trans: "Allahumma Rabban-nas, adhhibil-ba's, washfi La shifa'a illa shifa'uk.", trads: { es: "¡Oh Allah, Señor de la humanidad! Aleja el daño y cura.", en: "O Allah, Lord of mankind, remove the harm and heal.", ar: "" }, frases: { es: "Esos sofocos y calores repentinos cansan el cuerpo, pero recuerda que cada incomodidad física borra faltas.", en: "Those sudden hot flashes exhaust the body, but remember that every discomfort erases past mistakes.", ar: "تلك الهبات الساخنة والمفاجئة تجهد الجسد، لكن تذكري أن كل مشقة جسدية تكفر عن خطايا الماضي." } }
+                ]
+            },
+            general: {
+                titulos: { es: "🌸 Estado General Emocional", en: "🌸 General Mood State", ar: "🌸 الحالة العامة" },
+                estados: [
+                    { nombres: { es: "Enfadada / Irritada", en: "Angry", ar: "غاضبة" }, instrucciones: { es: "", en: "", ar: "" }, arabe: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ", trans: "A'udhu billahi minash-shaitanir-rajim.", trads: { es: "Me refugio en Allah del demonio maldito.", en: "I seek refuge in Allah from Satan.", ar: "" }, frases: { es: "El enfado es una tormenta. Cuando sientas que vas a explotar, respira y busca refugio en Allah.", en: "Anger is a storm. Stay silent and seek refuge in Allah.", ar: "الغضب عاصفة تحجب سلامكِ الداخلي. استعيذي بالله." } },
+                    { nombres: { es: "Triste / Agobiada", en: "Sad", ar: "حزينة" }, instrucciones: { es: "", en: "", ar: "" }, arabe: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ", trans: "Allahumma inni 'a'udhu bika minal-hammi wal-hazan.", trads: { es: "¡Oh Allah! Me refugio en Ti de la ansiedad y de la tristeza.", en: "O Allah, I seek refuge in You from anxiety and sorrow.", ar: "" }, frases: { es: "Allah conoce la pureza de tu corazón. Descansa en Su amor, este momento pasará.", en: "Allah knows your heart, this too shall pass.", ar: "الله يعلم طهر قلبكِ. اطمئني." } }
                 ]
             },
             hadiths: {
-                titulos: { es: "🍯 Medicina Propética y Remedios", en: "🍯 Prophetic Medicine & Remedies", ar: "🍯 الطب النبوي والشفاء" },
+                titulos: { es: "🍯 Medicina Propética y Remedios", en: "🍯 Prophetic Remedies", ar: "🍯 الطب النبوي" },
                 estados: [
-                    {
-                        nombres: { es: "Miel (Shifá)", en: "Honey (Shifa)", ar: "العسل (شفاء)" },
-                        instrucciones: { es: "📖 Sura An-Nahl (16:69)", en: "📖 Surah An-Nahl (16:69)", ar: "📖 سورة النحل (١٦:٦٩)" },
-                        arabe: "يَخْرُجُ مِن بُطُونِهَا شَرَابٌ مُّخْتَلِفٌ أَلْوَانُهُ فِيهِ شِفَاءٌ لِّلنَّاسِ",
-                        trans: "Yakhruju min butuniha sharabun mukhtalifun alwanuhu fihi shifa'un lin-nas.",
-                        trads: { es: "De sus vientres sale un líquido de diferentes colores que contiene curación para los hombres.", en: "From their bellies comes a drink of varying colors containing healing for mankind.", ar: "" },
-                        frases: { es: "El Mensajero de Allah (ﷺ) dijo: 'La curación se encuentra en tres cosas: un trago de miel, la incisión de la ventosa (Hiyama) o la cauterización con fuego, pero yo prohíbo a mi ummah la cauterización'. (Bujari)", en: "The Prophet (ﷺ) said: 'Healing is in three things: A drink of honey, cupping, or cauterization, but I forbid my ummah from cauterization.' (Bukhari)", ar: "قال النبي (ﷺ): الشفاء في ثلاثة: شربة عسل، وشرطة محجم، وكية نار، وأنهى أمتي عن الكي." }
-                    },
-                    {
-                        nombres: { es: "Semilla Negra", en: "Black Seed", ar: "الحبة السوداء" },
-                        instrucciones: { es: "📜 Hadith de Bujari y Muslim", en: "📜 Hadith from Bukhari & Muslim", ar: "📜 حديث البخاري ومسلم" },
-                        arabe: "فِي الْحَبَّةِ السَّوْدَاءِ شِفَاءٌ مِنْ كُلِّ دَاءٍ إِلاَّ السَّامَ",
-                        trans: "Fil-habbatil-sawda'i shifa'un min kulli da'in illas-sam.",
-                        trads: { es: "En la semilla negra hay curación para todas las enfermedades excepto para la muerte.", en: "In the black seed there is healing for every disease except death.", ar: "" },
-                        frases: { es: "Hermana, la semilla negra (Habbat al-Barakah) es recomendada por nuestro amado Profeta como una protección y fortaleza para el cuerpo entero. Úsala con plena confianza y fe en que el alivio real proviene de Allah.", en: "Sister, the black seed is highly recommended by our beloved Prophet as a shield and strength for the entire body. Use it with pure faith in Allah's recovery.", ar: "الحبة السوداء شفاء وبركة لجسدكِ كما أوصانا الحبيب المصطفى. استعمليها بيقين تام أن الشافي هو الله وحده." }
-                    },
-                    {
-                        nombres: { es: "Dátiles Ajwa", en: "Ajwa Dates", ar: "تمر العجوة" },
-                        instrucciones: { es: "📜 Hadith sobre la protección", en: "📜 Hadith on Protection", ar: "📜 حديث الحماية والبركة" },
-                        arabe: "مَنْ تَصَبَّحَ بِسَبْعِ تَمَرَاتٍ عَجْوَةً لَمْ يَضُرَّهُ ذَلِكَ الْيَوْمَ سُمٌّ وَلاَ سِحْرٌ",
-                        trans: "Man tasabbaha bi-sab'i tamaratin 'ajwatan lam yadhurruhu dhalikal-yawma summun wa la sihr.",
-                        trads: { es: "Quien tome siete dátiles de Ajwa por la mañana estará protegido contra el veneno y la magia ese día.", en: "Whoever eats seven Ajwa dates in the morning will not be harmed by poison or magic that day.", ar: "" },
-                        frases: { es: "Los dátiles no solo alimentan el cuerpo de la mujer, sino que además brindan una protección espiritual inmensa directa desde la Sunnah. Desayunar con ellos llena tu día de barakah.", en: "Dates do not only nourish your body, they also give an immense spiritual shield straight from the Sunnah.", ar: "تمر العجوة غذاء وحماية لروحكِ وجسدكِ من كل سوء." }
-                    }
+                    { nombres: { es: "Miel (Shifá)", en: "Honey", ar: "العسل" }, instrucciones: { es: "📖 Sura An-Nahl (16:69)", en: "📖 Surah An-Nahl", ar: "📖 سورة النحل" }, arabe: "يَخْرُجُ مِن بُطُونِهَا شَرَابٌ مُّخْتَلِفٌ أَلْوَانُهُ فِيهِ شِفَاءٌ لِّلنَّاسِ", trans: "Yakhruju min butuniha sharabun mukhtalifun alwanuhu fihi shifa'un lin-nas.", trads: { es: "De sus vientres sale un líquido de diferentes colores que contiene curación.", en: "From their bellies comes a drink containing healing.", ar: "" }, frases: { es: "El Profeta (ﷺ) dijo que la curación se encuentra en un trago de miel.", en: "The Prophet said healing is in a drink of honey.", ar: "شربة عسل فيها شفاء." } }
                 ]
             }
         };
 
+        function rotarAya() {
+            ayaIndice = (ayaIndice + 1) % ayasComunidad.length;
+            document.getElementById('aya-home-texto').innerText = ayasComunidad[ayaIndice].texto;
+            document.getElementById('aya-home-fuente').innerText = ayasComunidad[ayaIndice].fuente;
+        }
+
+        function cambiarTemaColor() {
+            const tema = document.getElementById('select-color-tema').value;
+            if(tema === 'rosa') {
+                document.documentElement.style.setProperty('--bg-dinamico', 'linear-gradient(135deg, #FFF0F5 0%, #E6E6FA 100%)');
+            } else if(tema === 'lila') {
+                document.documentElement.style.setProperty('--bg-dinamico', 'linear-gradient(135deg, #E6E6FA 0%, #D8BFD8 100%)');
+            } else if(tema === 'azul') {
+                document.documentElement.style.setProperty('--bg-dinamico', 'linear-gradient(135deg, #E0F7FA 0%, #B2EBF2 100%)');
+            }
+        }
+
+        function cambiarFormaTasbih() {
+            const forma = document.getElementById('select-shape').value;
+            const btn = document.getElementById('btn-pulsar');
+            btn.className = 'circle-btn'; 
+            if(forma === 'digital') btn.classList.add('shape-digital');
+            if(forma === 'bolas') btn.classList.add('shape-bolas');
+            if(forma === 'corazon') btn.classList.add('shape-corazon');
+        }
+
+        function cambiarModoCombinado() {
+            const modoDhikr = document.getElementById('select-modo-dhikr').value;
+            const selectDhikr = document.getElementById('select-dhikr');
+            if(modoDhikr === 'combinado') {
+                puntosDhikr = 0;
+                selectDhikr.value = "SubhanAllah";
+                selectDhikr.disabled = true;
+                document.getElementById('contador-puntos').innerText = puntosDhikr;
+            } else {
+                selectDhikr.disabled = false;
+            }
+        }
+
         function cambiarIdiomaGlobal() {
             idiomaActual = document.getElementById('select-lang').value;
             const t = traduccionesInterfaz[idiomaActual];
-
             document.getElementById('app-subtitle').innerText = t.subtitle;
             document.getElementById('main-question').innerText = t.question;
             document.getElementById('btn-modo-mens').innerHTML = t.mens;
             document.getElementById('btn-modo-emb').innerHTML = t.emb;
             document.getElementById('btn-modo-meno').innerHTML = t.meno;
-            document.getElementById('btn-modo-hadiths').innerHTML = t.hadiths;
             document.getElementById('btn-back').innerText = t.back;
             document.getElementById('subtitle-estado').innerText = t.subEstado;
             document.getElementById('quran-title').innerText = t.quranTitle;
             document.getElementById('quran-subtitle').innerText = t.quranSub;
             document.getElementById('dhikr-title').innerText = t.dhikrTitle;
             document.getElementById('dhikr-subtitle').innerText = t.dhikrSub;
-            document.getElementById('btn-pulsar').innerText = t.pulsar;
+            document.getElementById('btn-pulsar').querySelector('span').innerText = t.pulsar;
             document.getElementById('nav-start').innerText = t.navStart;
             document.getElementById('nav-audio').innerText = t.navAudio;
             document.getElementById('nav-dhikr').innerText = t.navDhikr;
-            document.getElementById('nav-settings').innerText = t.navSettings;
-            
-            document.getElementById('yt-link-1').innerText = t.yt1;
-            document.getElementById('yt-link-2').innerText = t.yt2;
-
-            if (modoActual !== '') {
-                cambiarModo(modoActual);
-            }
-            resetContador();
+            if(modoActual !== '') cambiarModo(modoActual);
         }
 
         function cambiarModo(modo) {
             modoActual = modo;
             document.getElementById('screen-inicio').classList.remove('active');
             document.getElementById('screen-estados').classList.add('active');
-            
             document.getElementById('titulo-modo').innerText = datos[modo].titulos[idiomaActual];
             document.getElementById('card-resultado').style.display = 'none';
 
@@ -736,7 +547,6 @@
         }
 
         function mostrarContenido(index) {
-            // Quitar color rosa pastel de todos los del grid y ponérselo al seleccionado
             document.querySelectorAll('.btn-estado').forEach(el => el.classList.remove('selected'));
             const selectedBtn = document.getElementById(`btn-est-${index}`);
             if(selectedBtn) selectedBtn.classList.add('selected');
@@ -745,13 +555,7 @@
             document.getElementById('dua-instruccion').innerText = item.instrucciones[idiomaActual];
             document.getElementById('dua-arabe').innerText = item.arabe;
             document.getElementById('dua-trans').innerText = item.trans;
-            
-            if (idiomaActual === 'ar') {
-                document.getElementById('dua-trad').innerText = "";
-            } else {
-                document.getElementById('dua-trad').innerText = item.trads[idiomaActual];
-            }
-            
+            document.getElementById('dua-trad').innerText = (idiomaActual === 'ar') ? "" : item.trads[idiomaActual];
             document.getElementById('frase-mot').innerText = item.frases[idiomaActual];
             document.getElementById('card-resultado').style.display = 'block';
         }
@@ -759,21 +563,62 @@
         function volverInicio() {
             modoActual = '';
             document.getElementById('screen-estados').classList.remove('active');
+            document.getElementById('screen-calendario').classList.remove('active');
             document.getElementById('screen-ranking').classList.remove('active');
             document.getElementById('screen-inicio').classList.add('active');
-            document.getElementById('tab-home').classList.add('active');
         }
 
-        function guardarNombreUsuario() {
-            nombreUsuario = document.getElementById('input-username').value || 'Hermana';
-            localStorage.setItem('nisat_username', nombreUsuario);
-            actualizarDatosPantallas();
+        function incrementarDhikr() {
+            puntosDhikr++;
+            const modoDhikr = document.getElementById('select-modo-dhikr').value;
+            const selectDhikr = document.getElementById('select-dhikr');
+
+            if(modoDhikr === 'combinado') {
+                if(puntosDhikr <= 33) selectDhikr.value = "SubhanAllah";
+                else if(puntosDhikr <= 66) selectDhikr.value = "Alhamdulillah";
+                else if(puntosDhikr <= 99) selectDhikr.value = "Allahu Akbar";
+                else if(puntosDhikr === 100) {
+                    estrellasContador++;
+                    alert("¡Completaste el ciclo de la Sunnah de 100 repeticiones! ⭐");
+                    puntosDhikr = 0;
+                    selectDhikr.value = "SubhanAllah";
+                }
+            } else {
+                if (puntosDhikr === 33 || puntosDhikr === 100) {
+                    estrellasContador++;
+                }
+            }
+            document.getElementById('contador-puntos').innerText = puntosDhikr;
+            actualizarDatos();
         }
 
-        function actualizarDatosPantallas() {
-            document.getElementById('rank-display-name').innerText = `${nombreUsuario} (Tú)`;
-            document.getElementById('rank-display-points').innerText = puntosDhikr;
-            document.getElementById('star-cycles-count').innerText = ciclosCompletados;
+        function guardarNombre() {
+            nombreUser = document.getElementById('input-username').value || 'Hermana';
+            actualizarDatos();
+        }
+
+        function actualizarDatos() {
+            document.getElementById('rank-name').innerText = `${nombreUser} (Tú)`;
+            document.getElementById('rank-pts').innerText = puntosDhikr;
+            document.getElementById('star-cycles').innerText = estrellasContador;
+        }
+
+        function cargarCalendario() {
+            const grid = document.getElementById('cal-grid-dias');
+            grid.innerHTML = '';
+            for(let i=1; i<=30; i++) {
+                const day = document.createElement('div');
+                day.className = 'cal-day';
+                day.innerText = i;
+                day.onclick = () => {
+                    const tipo = document.getElementById('cal-tipo-registro').value;
+                    day.className = 'cal-day'; 
+                    if(tipo === 'mens') day.classList.add('active-mens');
+                    if(tipo === 'emb') day.classList.add('active-emb');
+                    if(tipo === 'post') day.classList.add('active-post');
+                };
+                grid.appendChild(day);
+            }
         }
 
         function navegar(pantalla) {
@@ -782,11 +627,8 @@
             document.querySelectorAll('.nav-tabs button').forEach(t => t.classList.remove('active'));
 
             if(pantalla === 'home') {
-                if (modoActual === '') {
-                    document.getElementById('screen-inicio').classList.add('active');
-                } else {
-                    document.getElementById('screen-estados').classList.add('active');
-                }
+                if (modoActual === '') document.getElementById('screen-inicio').classList.add('active');
+                else document.getElementById('screen-estados').classList.add('active');
                 document.getElementById('tab-home').classList.add('active');
             } else if(pantalla === 'quran') {
                 document.getElementById('screen-quran').classList.add('active');
@@ -797,41 +639,20 @@
             } else if(pantalla === 'ajustes') {
                 document.getElementById('screen-ajustes').classList.add('active');
                 document.getElementById('tab-ajustes').classList.add('active');
+            } else if(pantalla === 'calendario') {
+                document.getElementById('screen-calendario').classList.add('active');
+                cargarCalendario();
             } else if(pantalla === 'ranking') {
                 document.getElementById('screen-ranking').classList.add('active');
-                actualizarDatosPantallas();
             }
         }
 
-        function incrementarDhikr() {
-            puntosDhikr++;
-            document.getElementById('contador-puntos').innerText = puntosDhikr;
-            
-            const msgLogro = document.getElementById('mensaje-logro');
-            if (puntosDhikr === 33 || puntosDhikr === 100) {
-                ciclosCompletados++;
-                localStorage.setItem('nisat_stars', ciclosCompletados);
-                
-                const t = traduccionesInterfaz[idiomaActual];
-                msgLogro.innerText = `🎉 ${t.logro.replace("repetitions", puntosDhikr).replace("repeticiones", puntosDhikr)}`;
-                if(tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
-            } else if (puntosDhikr > 0 && puntosDhikr % 33 !== 0) {
-                msgLogro.innerText = ""; 
-            }
-            actualizarDatosPantallas();
-        }
-
-        function resetContador() {
-            puntosDhikr = 0;
-            document.getElementById('contador-puntos').innerText = puntosDhikr;
-            document.getElementById('mensaje-logro').innerText = "";
-            actualizarDatosPantallas();
-        }
+        function resetContador() { puntosDhikr = 0; document.getElementById('contador-puntos').innerText = puntosDhikr; }
 
         window.onload = () => {
-            document.getElementById('input-username').value = nombreUsuario;
+            rotarAya();
             cambiarIdiomaGlobal();
-            actualizarDatosPantallas();
+            actualizarDatos();
         };
     </script>
 </body>
