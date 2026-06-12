@@ -192,7 +192,6 @@
         .dhikr-container { text-align: center; padding: 10px 0; }
         .select-dhikr { width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--lila-medio); margin-bottom: 15px; font-weight: 600; color: var(--texto); }
         
-        /* HERMOSAS FORMAS DINÁMICAS DEL TASBIH */
         .tasbih-wrapper {
             margin: 20px auto;
             display: flex;
@@ -201,7 +200,6 @@
             min-height: 180px;
         }
 
-        /* Estilo Clásico Bonito */
         .tasbih-classic {
             width: 140px;
             height: 140px;
@@ -219,7 +217,6 @@
             transition: transform 0.1s;
         }
         
-        /* Estilo Digital */
         .tasbih-digital {
             width: 160px;
             height: 110px;
@@ -237,7 +234,6 @@
             box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* Estilo Cuentas/Bolas */
         .tasbih-bolas {
             width: 150px;
             height: 150px;
@@ -254,7 +250,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        /* Estilo Corazón */
         .tasbih-corazon {
             width: 130px;
             height: 130px;
@@ -329,7 +324,7 @@
 
     <div class="container">
         <button id="btn-top-cal" class="btn-top-calendario" onclick="navegar('calendario')">📅 Calendario</button>
-        <button class="ranking-top-btn" onclick="navegar('ranking')">🏆 Ranking</button>
+        <button id="btn-top-rank" class="ranking-top-btn" onclick="navegar('ranking')">🏆 Ranking</button>
 
         <header>
             <h1>🌺 Nisat</h1>
@@ -390,15 +385,9 @@
             <div class="dhikr-container">
                 <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                     <select id="select-shape" class="select-cal" style="margin-bottom:0;" onchange="cambiarFormaTasbih()">
-                        <option value="classic">Forma: Clásica 🌸</option>
-                        <option value="digital">Forma: Tasbih Digital 📟</option>
-                        <option value="bolas">Forma: Tasbih de Cuentas 📿</option>
-                        <option value="corazon">Forma: Corazón ❤️</option>
-                    </select>
+                        </select>
                     <select id="select-modo-dhikr" class="select-cal" style="margin-bottom:0;" onchange="cambiarModoCombinado()">
-                        <option value="simple">Modo: Libre / Simple</option>
-                        <option value="combinado">Modo: Combinado (Sunnah)</option>
-                    </select>
+                        </select>
                 </div>
 
                 <select id="select-dhikr" class="select-dhikr" onchange="resetContador()">
@@ -419,34 +408,23 @@
         </div>
 
         <div id="screen-calendario" class="screen">
-            <button class="btn-back" onclick="volverInicio()">← Volver</button>
+            <button id="btn-back-cal" class="btn-back" onclick="volverInicio()">← Volver</button>
             <h3 id="cal-title">📅 Registro de Estados de Salud</h3>
             <p id="cal-subtitle" class="subtitle" style="margin-bottom: 15px;">Selecciona el estado que deseas registrar o borrar:</p>
             
             <select id="cal-tipo-registro" class="select-cal">
-                <option value="mens">🩸 Menstruación</option>
-                <option value="emb">🤰 Embarazo</option>
-                <option value="post">🍼 Postparto</option>
-                <option value="borrar">❌ Borrar Registro / Equivocación</option>
-            </select>
+                </select>
 
             <div class="cal-grid" id="cal-grid-dias"></div>
 
-            <div id="box-sunnah-gui" class="info-box-sunnah">
-                <strong style="color: #8B008B; display:block; margin-bottom:5px;">✨ ¿Cómo saber si terminó la menstruación según la Sunnah?</strong>
-                Hay dos signos válidos en el Islam para verificar la pureza (Tuhr):
-                <ul style="margin-left: 15px; margin-top: 5px;">
-                    <li><strong>1. Al-Qassah Al-Bayda (El flujo blanco):</strong> Una secreción blanquecina clara que emiten los pliegues al detenerse el sangrado.</li>
-                    <li><strong>2. Al-Jufuf (La sequedad completa):</strong> Al introducir un algodón o gasa limpia, esta sale completamente limpia, sin rastros de sangre, color marrón o amarillento.</li>
-                </ul>
-            </div>
+            <div id="box-sunnah-gui" class="info-box-sunnah"></div>
         </div>
 
         <div id="screen-ranking" class="screen">
-            <button class="btn-back" onclick="volverInicio()">← Volver</button>
-            <h3>🏆 Ranking Semanal</h3>
+            <button id="btn-back-rank" class="btn-back" onclick="volverInicio()">← Volver</button>
+            <h3 id="rank-title">🏆 Ranking Semanal</h3>
             <div style="background: white; border-radius:12px; padding: 10px; text-align: center; margin: 10px 0; box-shadow: 0 2px 6px rgba(0,0,0,0.04);">
-                <span style="font-size: 16px; font-weight: bold; color: #FF8C00;">⭐ <span id="star-cycles">0</span> ciclos hechos</span>
+                <span style="font-size: 16px; font-weight: bold; color: #FF8C00;">⭐ <span id="star-cycles">0</span> <span id="text-cycles-done">ciclos hechos</span></span>
             </div>
             <div style="background: white; border-radius: 16px; padding: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                 <p style="padding: 6px 0; border-bottom: 1px solid #eee;">🥇 <strong>Malak_R:</strong> 1,890 Dhikr</p>
@@ -456,32 +434,29 @@
         </div>
 
         <div id="screen-ajustes" class="screen">
-            <h3>⚙️ Ajustes de la App</h3>
+            <h3 id="ajustes-title">⚙️ Ajustes de la App</h3>
             <div class="divider"></div>
             
-            <label style="font-size: 14px; font-weight: bold;">Tu Nombre:</label>
+            <label id="label-username" style="font-size: 14px; font-weight: bold;">Tu Nombre:</label>
             <input type="text" id="input-username" class="input-ajustes" placeholder="Escribe tu nombre..." oninput="guardarNombre()">
 
-            <label style="font-size: 14px; font-weight: bold; display:block; margin-bottom:5px;">Idioma / Language:</label>
+            <label id="label-lang" style="font-size: 14px; font-weight: bold; display:block; margin-bottom:5px;">Idioma / Language:</label>
             <select id="select-lang" class="select-cal" onchange="cambiarIdiomaGlobal()">
                 <option value="es">Español</option>
                 <option value="en">English</option>
                 <option value="ar">العربية</option>
             </select>
 
-            <label style="font-size: 14px; font-weight: bold; display:block; margin-bottom:5px;">Cambiar Color de la App (Pastel):</label>
+            <label id="label-theme" style="font-size: 14px; font-weight: bold; display:block; margin-bottom:5px;">Cambiar Color de la App (Pastel):</label>
             <select id="select-color-tema" class="select-cal" onchange="cambiarTemaColor()">
-                <option value="rosa">Rosa Pastel 🌸</option>
-                <option value="lila">Lila Pastel 🪻</option>
-                <option value="azul">Azul Claro Pastel 🩵</option>
-            </select>
+                </select>
         </div>
 
         <nav class="nav-tabs">
             <button class="tab-icon active" id="tab-home" onclick="navegar('home')">🏠<br><span id="nav-start">Inicio</span></button>
             <button class="tab-icon" id="tab-quran" onclick="navegar('quran')">🎧<br><span id="nav-audio">Audio</span></button>
             <button class="tab-icon" id="tab-dhikr" onclick="navegar('dhikr')">📿<br><span id="nav-dhikr">Dhikr</span></button>
-            <button class="tab-icon" id="tab-ajustes" onclick="navegar('ajustes')">⚙️<br><span>Ajustes</span></button>
+            <button class="tab-icon" id="tab-ajustes" onclick="navegar('ajustes')">⚙️<br><span id="nav-settings">Ajustes</span></button>
         </nav>
     </div>
 
@@ -503,43 +478,75 @@
             { arabe: "مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ", es: '"Tu Señor no te ha abandonado ni te aborrece. Y la otra vida será mejor para ti".', en: '"Your Lord has not taken leave of you, nor has He detested you."', ar: '"مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ"', fuente: "Sura Ad-Duha (93:3-5)" },
             { arabe: "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ", es: '"¡Oh, creyentes! Buscad ayuda en la paciencia y en la oración. En verdad, Alá está con los pacientes".', en: '"O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient."', ar: '"يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ"', fuente: "Sura Al-Baqarah (2:153)" },
             { arabe: "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا", es: '"Alá no impone a ninguna alma una carga mayor de la que puede soportar".', en: '"Allah does not charge a soul except [with that within] its capacity."', ar: '"لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا"', fuente: "Sura Al-Baqarah (2:286)" },
-            { arabe: "إِنَّمَا أَشْكُو بَثِّي وَحُزْنِي إِلَى اللَّهِ", es: '"Solo expongo mi queja y mi lamento ante Alá".', en: '"I only complain of my suffering and my grief to Allah."', ar: '"إِنَّمَا أَشْكُو بَثِّي وَحُزْنِي إِلَى اللَّهِ"', fuente: "Sura Yusuf (12:86)" }
+            { arabe: "إِنَّمَا أَشْكُو بِثِّي وَحُزْنِي إِلَى اللَّهِ", es: '"Solo expongo mi queja y mi lamento ante Alá".', en: '"I only complain of my suffering and my grief to Allah."', ar: '"إِنَّمَا أَشْكُو بِثِّي وَحُزْنِي إِلَى اللَّهِ"', fuente: "Sura Yusuf (12:86)" }
         ];
 
         const traduccionesInterfaz = {
-            es: { subtitle: "Tu espacio de calma y recuerdo diario", question: "¿Cómo te encuentras hoy, hermana?", mens: "🩸 Menstruación o Postparto", emb: "🤰 Embarazo", meno: "🍂 Menopausia u Madurez", gen: "🌸 Estado General", had: "🍯 Hadiths de Curación y Medicina Propética", back: "← Cambiar de modo", subEstado: "Selecciona tu estado actual:", quranTitle: "Escucha el Qur'an y Cálmate", quranSub: "Permite que las palabras de Allah calmen tu cuerpo y tu mente.", dhikrTitle: "Contador de Dhikr", dhikrSub: "Mantén tu lengua húmeda con el recuerdo de Allah.", calTitle: "📅 Registro de Estados de Salud", calSub: "Selecciona el estado que deseas registrar o borrar:", navStart: "Inicio", navAudio: "Audio", navDhikr: "Dhikr", sTitle: "✨ ¿Cómo saber si terminó la menstruación según la Sunnah?", sText: "Hay dos signos válidos en el Islam para verificar la pureza (Tuhr):<ul style='margin-left: 15px; margin-top: 5px;'><li><strong>1. Al-Qassah Al-Bayda (El flujo blanco):</strong> Una secreción blanquecina clara al detenerse el sangrado.</li><li><strong>2. Al-Jufuf (La sequedad completa):</strong> Al introducir un algodón, este sale completamente limpio sin rastros marrones o amarillos.</li></ul>" },
-            en: { subtitle: "Your space of calm and daily remembrance", question: "How are you feeling today, sister?", mens: "🩸 Menstruation or Postpartum", emb: "🤰 Pregnancy", meno: "🍂 Menopause or Maturity", gen: "🌸 General Mood", had: "🍯 Hadiths of Prophetic Medicine", back: "← Change mode", subEstado: "Select your current state:", quranTitle: "Listen to the Qur'an & Calm Down", quranSub: "Allow the words of Allah to soothe your body and soul.", dhikrTitle: "Dhikr Counter", dhikrSub: "Keep your tongue moist with the remembrance of Allah.", calTitle: "📅 Health Status Logging", calSub: "Select the status you wish to mark or clear:", navStart: "Home", navAudio: "Audio", navDhikr: "Dhikr", sTitle: "✨ How to know if menstruation ended according to Sunnah?", sText: "There are two valid signs in Islam to verify purity (Tuhr):<ul style='margin-left: 15px; margin-top: 5px;'><li><strong>1. Al-Qassah Al-Bayda (White Discharge):</strong> A clear white secretion when bleeding stops.</li><li><strong>2. Al-Jufuf (Complete Dryness):</strong> A cotton pad comes out entirely clean with no yellow/brown trace.</li></ul>" },
-            ar: { subtitle: "مساحتكِ الخاصّة للهدوء والذِّكر اليومي", question: "كيف تجدين نفسكِ اليوم يا أختي؟", mens: "🩸 الحيض أو النفاس", emb: "🤰 الحمل", meno: "🍂 سن الأمل والنضج", gen: "🌸 الحالة العامة", had: "🍯 أحاديث الشفاء والطب النبوي", back: "← تغيير الوضع", subEstado: "اختاري حالتكِ الحالية:", quranTitle: "استمعي إلى القرآن واطمئني", quranSub: "دعي كلمات الله تهدئ جسدكِ وعقلكِ.", dhikrTitle: "عداد الأذكار", dhikrSub: "اجعلي لسانكِ رطبًا بذكر الله.", calTitle: "📅 سجل الحالات الصحية", calSub: "حددي الحالة التي ترغبين في تسجيلها أو مسحها:", navStart: "الرئيسية", navAudio: "الصوتيات", navDhikr: "الأذكار", sTitle: "✨ كيف تعرفين طهركِ من الحيض وفق السنّة؟", sText: "هناك علامان صحيحتان في الإسلام لمعرفة الطهر:<ul style='margin-left: 15px; margin-top: 5px;'><li><strong>١. القصة البيضاء:</strong> ماء أبيض يدفعه الرحم عند انقطاع الدم.</li><li><strong>٢. الجفوف التام:</strong> أن تخرج القطنة نزيّهة تماماً ليس عليها أثر صفرة أو كدرة.</li></ul>" }
+            es: { 
+                btnCal: "📅 Calendario", btnRank: "🏆 Ranking", subtitle: "Tu espacio de calma y recuerdo diario", question: "¿Cómo te encuentras hoy, hermana?", mens: "🩸 Menstruación o Postparto", emb: "🤰 Embarazo", meno: "🍂 Menopausia u Madurez", gen: "🌸 Estado General", had: "🍯 Hadiths de Curación y Medicina Propética", back: "← Cambiar de modo", backG: "← Volver al inicio", backSimple: "← Volver", subEstado: "Selecciona tu estado actual:", quranTitle: "Escucha el Qur'an y Cálmate", quranSub: "Permite que las palabras de Allah calmen tu cuerpo y tu mente.", dhikrTitle: "Contador de Dhikr", dhikrSub: "Mantén tu lengua húmeda con el recuerdo de Allah.", calTitle: "📅 Registro de Estados de Salud", calSub: "Selecciona el estado que deseas registrar o borrar:", navStart: "Inicio", navAudio: "Audio", navDhikr: "Dhikr", navSettings: "Ajustes", rankTitle: "🏆 Ranking Semanal", doneCycles: "ciclos hechos", ajustesTitle: "⚙️ Ajustes de la App", labelUser: "Tu Nombre:", placeholderUser: "Escribe tu nombre...", labelLang: "Idioma / Language:", labelTheme: "Cambiar Color de la App (Pastel):",
+                yt1: "▶ Versos de Sanación (YouTube)", yt2: "▶ Suras para Calmarte (YouTube)",
+                shapes: ["Forma: Clásica 🌸", "Forma: Tasbih Digital 📟", "Forma: Tasbih de Cuentas 📿", "Forma: Corazón ❤️"],
+                modesDhikr: ["Modo: Libre / Simple", "Modo: Combinado (Sunnah)"],
+                themes: ["Rosa Pastel 🌸", "Lila Pastel 🪻", "Azul Claro Pastel 🩵"],
+                calSelect: ["🩸 Menstruación", "🤰 Embarazo", "🍼 Postparto", "❌ Borrar Registro / Equivocación"],
+                youText: "Tú (Hermana)",
+                sTitle: "✨ ¿Cómo saber si terminó la menstruación según la Sunnah?", sText: "Hay dos signos válidos en el Islam para verificar la pureza (Tuhr):<ul style='margin-left: 15px; margin-top: 5px;'><li><strong>1. Al-Qassah Al-Bayda (El flujo blanco):</strong> Una secreción blanquecina clara al detenerse el sangrado.</li><li><strong>2. Al-Jufuf (La sequedad completa):</strong> Al introducir un algodón, este sale completamente limpio sin rastros marrones o amarillos.</li></ul>" 
+            },
+            en: { 
+                btnCal: "📅 Calendar", btnRank: "🏆 Ranking", subtitle: "Your space of calm and daily remembrance", question: "How are you feeling today, sister?", mens: "🩸 Menstruation or Postpartum", emb: "🤰 Pregnancy", meno: "🍂 Menopause or Maturity", gen: "🌸 General Mood", had: "🍯 Hadiths of Prophetic Medicine", back: "← Change mode", backG: "← Back to home", backSimple: "← Back", subEstado: "Select your current state:", quranTitle: "Listen to the Qur'an & Calm Down", quranSub: "Allow the words of Allah to soothe your body and soul.", dhikrTitle: "Dhikr Counter", dhikrSub: "Keep your tongue moist with the remembrance of Allah.", calTitle: "📅 Health Status Logging", calSub: "Select the status you wish to mark or clear:", navStart: "Home", navAudio: "Audio", navDhikr: "Dhikr", navSettings: "Settings", rankTitle: "🏆 Weekly Ranking", doneCycles: "cycles done", ajustesTitle: "⚙️ App Settings", labelUser: "Your Name:", placeholderUser: "Type your name...", labelLang: "Language / Idioma:", labelTheme: "Change App Theme Color (Pastel):",
+                yt1: "▶ Healing Verses (YouTube)", yt2: "▶ Surahs to Calm Down (YouTube)",
+                shapes: ["Shape: Classic 🌸", "Shape: Digital Tasbih 📟", "Shape: Beads Tasbih 📿", "Shape: Heart ❤️"],
+                modesDhikr: ["Mode: Free / Simple", "Mode: Combined (Sunnah)"],
+                themes: ["Pastel Pink 🌸", "Pastel Purple 🪻", "Pastel Light Blue 🩵"],
+                calSelect: ["🩸 Menstruation", "🤰 Pregnancy", "🍼 Postpartum", "❌ Clear Log / Correction"],
+                youText: "You (Sister)",
+                sTitle: "✨ How to know if menstruation ended according to Sunnah?", sText: "There are two valid signs in Islam to verify purity (Tuhr):<ul style='margin-left: 15px; margin-top: 5px;'><li><strong>1. Al-Qassah Al-Bayda (White Discharge):</strong> A clear white secretion when bleeding stops.</li><li><strong>2. Al-Jufuf (Complete Dryness):</strong> A cotton pad comes out entirely clean with no yellow/brown trace.</li></ul>" 
+            },
+            ar: { 
+                btnCal: "📅 التقويم", btnRank: "🏆 الترتيب", subtitle: "مساحتكِ الخاصّة للهدوء والذِّكر اليومي", question: "كيف تجدين نفسكِ اليوم يا أختي؟", mens: "🩸 الحيض أو النفاس", emb: "🤰 الحمل", meno: "🍂 سن الأمل والنضج", gen: "🌸 الحالة العامة", had: "🍯 أحاديث الشفاء والطب النبوي", back: "← تغيير الوضع", backG: "← العودة للرئيسية", backSimple: "← رجوع", subEstado: "اختاري حالتكِ الحالية:", quranTitle: "استمعي إلى القرآن واطمئني", quranSub: "دعي كلمات الله تهدئ جسدكِ وعقلكِ.", dhikrTitle: "عداد الأذكار", dhikrSub: "اجعلي لسانكِ رطبًا بذكر الله.", calTitle: "📅 سجل الحالات الصحية", calSub: "حددي الحالة التي ترغبين في تسجيلها أو مسحها:", navStart: "الرئيسية", navAudio: "الصوتيات", navDhikr: "الأذكار", navSettings: "الإعدادات", rankTitle: "🏆 الترتيب الأسبوعي", doneCycles: "دورات مكتملة", ajustesTitle: "⚙️ إعدادات التطبيق", labelUser: "اسمكِ:", placeholderUser: "اكتبي اسمكِ هنا...", labelLang: "اللغة / Language:", labelTheme: "تغيير لون التطبيق (باستيل):",
+                yt1: "▶ آيات الشفاء السكينة (يوتيوب)", yt2: "▶ سور مهدئة للقلب (يوتيوب)",
+                shapes: ["شكل: كلاسيكي 🌸", "شكل: مسبحة رقمية 📟", "شكل: مسبحة خرز 📿", "شكل: قلب ❤️"],
+                modesDhikr: ["الوضع: حر / بسيط", "الوضع: مدمج (السنة النبوية)"],
+                themes: ["وردي باستيل 🌸", "أرجواني ليلكي 🪻", "أزرق فاتح هادئ 🩵"],
+                calSelect: ["🩸 فترة الحيض", "🤰 فترة الحمل", "🍼 فترة النفاس", "❌ مسح السجل / تعديل الخطأ"],
+                youText: "أنتِ (الأخت)",
+                sTitle: "✨ كيف تعرفين طهركِ من الحيض وفق السنّة؟", sText: "هناك علامان صحيحتان في الإسلام لمعرفة الطهر:<ul style='margin-left: 15px; margin-top: 5px;'><li><strong>١. القصة البيضاء:</strong> ماء أبيض يدفعه الرحم عند انقطاع الدم.</li><li><strong>٢. الجفوف التام:</strong> أن تخرج القطنة نزيّهة تماماً ليس عليها أثر صفرة أو كدرة.</li></ul>" 
+            }
         };
 
-        // BASE DE DATOS FIJA CON LOS 4 BOTONES POR ESTADO Y LOS 3 HADITHS DE SHIFA
         const datos = {
             menstruacion: {
                 titulos: { es: "🩸 Menstruación y Postparto", en: "🩸 Menstruation & Postpartum", ar: "🩸 الحيض أو النفاس" },
                 estados: [
                     {
-                        nombres: { es: "Con Dolor Físico", en: "Physical Pain", ar: "ألم جسدي" },
+                        nombres: { es: "Dolor Físico / Malestar", en: "Physical Pain / Discomfort", ar: "ألم جسدي أو تعب" },
                         arabe: "بِسْمِ اللَّهِ (x3) • أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (x7)",
                         trads: { es: "En el nombre de Allah. Me refugio en Allah y en Su poder contra el mal de lo que encuentro y temo.", en: "In the name of Allah. I seek refuge in Allah and His power from the evil of what I find.", ar: "بِسْمِ اللَّهِ • أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ" },
-                        frases: { es: "Sunnah: El Profeta (ﷺ) enseñó esta Ruqyah para calmar los dolores físicos del cuerpo.", en: "Sunnah: The Prophet (ﷺ) taught this Ruqyah to relieve bodily pains.", ar: "من السنّة: وضع اليد على موضع الألم وقراءة الرقية." }
+                        frases: { es: "Sunnah: El Profeta (ﷺ) enseñó esta Ruqyah para calmar los dolores físicos y aliviar las molestias del cuerpo.", en: "Sunnah: The Prophet (ﷺ) taught this Ruqyah to relieve bodily pains and reduce physical distress.", ar: "من السنّة: وضع اليد على موضع الألم وقراءة هذه الرقية النبوية الشافية." }
                     },
                     {
-                        nombres: { es: "Cansancio Extremo", en: "Extreme Fatigue", ar: "تعب شديد" },
+                        nombres: { es: "Cansancio / Agotamiento", en: "Fatigue / Exhaustion", ar: "الخمول والإرهاق" },
                         arabe: "سُبْحَانَ اللَّهِ (x33) • الْحَمْدُ لِلَّهِ (x33) • اللَّهُ أَكْبَرُ (x34)",
-                        trads: { es: "Glorificado sea Allah, Alabado sea Allah, Allah es el más Grande (Antes de dormir).", en: "Glory be to Allah, Praise be to Allah, Allah is Greatest.", ar: "التسبيح والتحميد والتكبير عند النوم" },
-                        frases: { es: "Sunnah: El Profeta (ﷺ) le dio este remedio a Fatima cuando se quejó de cansancio extremo.", en: "Sunnah: The Prophet taught Fatima this Azkar when she complained of severe exhaustion.", ar: "وصية النبي ﷺ لفاطمة رضي الله عنها عند التعب." }
+                        trads: { es: "Glorificado sea Allah, Alabado sea Allah, Allah es el más Grande (Antes de dormir).", en: "Glory be to Allah, Praise be to Allah, Allah is Greatest (Before sleeping).", ar: "التسبيح والتحميد والتكبير عند النوم" },
+                        frases: { es: "Sunnah: El Profeta (ﷺ) le dio este remedio de Dhikr a su hija Fatima cuando se quejó de cansancio extremo.", en: "Sunnah: The Prophet taught Fatima this Azkar when she complained of severe physical exhaustion.", ar: "وصية النبي ﷺ لفاطمة رضي الله عنها عند التعب الشديد لتستعيد قوتها." }
+                    },
+                    {
+                        nombres: { es: "Tristeza General / Desánimo", en: "General Sadness / Low Energy", ar: "حزن ضيق النفس" },
+                        arabe: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَالْعَجْزِ وَالْكَسَلِ",
+                        trads: { es: "¡Oh Allah! Me refugio en Ti de la ansiedad, la tristeza, la incapacidad y la pereza.", en: "O Allah, I seek refuge in You from anxiety, sorrow, disability, and laziness.", ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ" },
+                        frases: { es: "Sunnah: El Profeta usaba este Dua para combatir la tristeza emocional y la pesadez mental.", en: "Sunnah: The Prophet used this supplication to ward off emotional sadness and heavy thoughts.", ar: "دعاء نبوي جامع لإزالة الحزن والضيق العاطفي." }
                     },
                     {
                         nombres: { es: "Tristeza por no rezar", en: "Sad for not praying", ar: "الحزن لعدم الصلاة" },
                         arabe: "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
                         trads: { es: "¡Oh Allah! Ayúdame a recordarte, agradecerte y adorarte de la mejor manera.", en: "O Allah, help me remember You, thank You, and worship You perfectly.", ar: "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ" },
-                        frases: { es: "Recuerda: Tu abstención de rezar por seguir la ley de Allah es en sí misma un acto de adoración recompensado.", en: "Remember: Abstaining from prayer out of obedience to Allah's command is rewarded worship.", ar: "ترككِ للصلاة امتثالاً لأمر الله هو عبادة تؤجرين عليها." }
+                        frases: { es: "Recuerda: Tu abstención de rezar por seguir la ley de Allah es en sí misma un acto de obediencia recompensado.", en: "Remember: Abstaining from prayer out of obedience to Allah's command is a highly rewarded worship.", ar: "ترككِ للصلاة امتثالاً لأمر الله الشرعي هو عبادة تؤجرين عليها كالصلاة تماماً." }
                     },
                     {
-                        nombres: { es: "Cambio de Humor", en: "Mood Swings", ar: "تقلبات المزاج" },
-                        arabe: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ",
-                        trads: { es: "¡Oh Convertidor de corazones! Afirma mi corazón en Tu religión.", en: "O Turner of the hearts, keep my heart firm upon Your religion.", ar: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي" },
-                        frases: { es: "Sunnah: Esta era la súplica que el Profeta (ﷺ) repetía con más frecuencia para estabilizar el alma.", en: "Sunnah: This was the supplication the Prophet (ﷺ) recited most to bring stability to the heart.", ar: "كان أكثر دعاء النبي ﷺ لتثبيت القلوب." }
+                        nombres: { es: "Ira / Irritación / Humor", en: "Anger / Irritability / Mood", ar: "الغضب والتوتر النفسي" },
+                        arabe: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ • اللَّهُمَّ اغْفِرْ لِي ذَنْبِي وَأَذْهِبْ غَيْظَ قَلْبِي",
+                        trads: { es: "Me refugio en Allah del demonio maldito. ¡Oh Allah! Perdona mi pecado y disipa la ira de mi corazón.", en: "I seek refuge in Allah from the accursed Satan. O Allah, forgive my sin and remove anger from my heart.", ar: "الاستعاذة بالله ودعاء إذهاب غيظ وسخونة الصدر" },
+                        frases: { es: "Sunnah: El Mensajero enseñó que refugiarse en Allah y cambiar de postura apaga de inmediato el fuego de la ira hormonal.", en: "Sunnah: The Messenger taught that seeking refuge and changing posture immediately cools down hormonal anger.", ar: "أمرنا النبي ﷺ بالاستعاذة والهدوء لأن الغضب جمرة من الشيطان." }
                     }
                 ]
             },
@@ -547,28 +554,28 @@
                 titulos: { es: "🤰 Modo Embarazo", en: "🤰 Pregnancy Mode", ar: "🤰 وضع الحمل" },
                 estados: [
                     {
-                        nombres: { es: "Náuseas o Cansancio", en: "Nausea or Fatigue", ar: "غثيان وتعب" },
+                        nombres: { es: "Náuseas / Cansancio", en: "Nausea / Fatigue", ar: "غثيان وتعب الحمل" },
                         arabe: "اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي",
                         trads: { es: "¡Oh Allah! Sana mi cuerpo, sana mi oído, sana mi vista.", en: "O Allah, make my body healthy, make my hearing healthy, make my sight healthy.", ar: "اللَّهُمَّ عَافِنِي فِي بَدَنِي" },
-                        frases: { es: "Cada molestia que sientes está esculpiendo la recompensa de albergar una nueva vida en tu vientre.", en: "Every discomfort you face is molding the divine reward of safeguarding a new soul.", ar: "كل مشقة تمرين بها تؤجرين عليها في حملكِ." }
+                        frases: { es: "Cada molestia que sientes está esculpiendo tu recompensa espiritual por albergar una nueva vida.", en: "Every discomfort you face is molding your divine reward for safeguarding a new soul.", ar: "كل مشقة تمرين بها في جسدك تؤجرين عليها وتثقل ميزان حسناتك." }
                     },
                     {
                         nombres: { es: "Dua para mi Bebé", en: "Dua for my Baby", ar: "دعاء لجنيني" },
                         arabe: "رَبِّ هَبْ لِي مِنْ لَدُنْكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ",
                         trads: { es: "Señor mío, concédeme una descendencia buena. Tú escuchas los ruegos.", en: "My Lord, grant me from Yourself a good offspring. Indeed, You are the Hearer of supplication.", ar: "ربِّ هَبْ لِي مِنْ لَدُنْكَ ذُرِّيَّةً طَيِّبَةً" },
-                        frases: { es: "Sunnah: Esta es la hermosa súplica del Profeta Zakariya pidiendo por su descendencia pura.", en: "Sunnah: This is the beautiful supplication of Prophet Zakariya for a pure lineage.", ar: "دعاء الأنبياء للذرية الصالحة." }
+                        frases: { es: "Sunnah: Esta es la hermosa súplica que hacía el Profeta Zakariya pidiendo por su descendencia pura.", en: "Sunnah: This is the beautiful supplication of Prophet Zakariya for a pure, blessed lineage.", ar: "دعاء الأنبياء العظيم لحفظ الذرية الصالحة البارة." }
                     },
                     {
                         nombres: { es: "Miedo al Parto", en: "Fear of Labor", ar: "الخوف من الولادة" },
-                        arabe: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
-                        trads: { es: "Allah es suficiente para nosotros, y Él es el mejor Guardián.", en: "Allah is sufficient for us, and He is the best Disposer of affairs.", ar: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ" },
-                        frases: { es: "Confía: Allah ha diseñado tu cuerpo con perfecta sabiduría para este momento. No estás sola.", en: "Trust: Allah has crafted your body with absolute wisdom for this exact journey. You are safe.", ar: "الله جعل في جسدكِ القدرة، فتوكلي عليه." }
+                        arabe: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ • عَلَى اللَّهِ تَوَكَّلْنَا",
+                        trads: { es: "Allah es suficiente para nosotros, y Él es el mejor Guardián. En Allah nos encomendamos.", en: "Allah is sufficient for us, and He is the best Disposer of affairs. Upon Allah we rely.", ar: "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ" },
+                        frases: { es: "Confía: Allah ha diseñado tu cuerpo con perfecta sabiduría para este momento. No estás sola.", en: "Trust: Allah has crafted your body with absolute wisdom for this exact journey. You are perfectly safe.", ar: "الله سبحانه جعل في جسدكِ القدرة، ففوضي أمرك إليه واطمئني." }
                     },
                     {
-                        nombres: { es: "Preocupada / Futuro", en: "Anxious / Future", ar: "القلق من المستقبل" },
-                        arabe: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ",
+                        nombres: { es: "Preocupación / Futuro", en: "Anxious / Future", ar: "القلق من المستقبل" },
+                        arabe: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَZَنِ",
                         trads: { es: "¡Oh Allah! Me refugio en Ti de la ansiedad y la tristeza.", en: "O Allah, I seek refuge in You from anxiety and sorrow.", ar: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ" },
-                        frases: { es: "Sunnah: El Profeta recurría a este Dua para despejar la mente de temores sobre el mañana.", en: "Sunnah: The Prophet used this prayer to clear the mind from worries about tomorrow.", ar: "استعاذة النبي ﷺ من الهم الذي يقعد العبد." }
+                        frases: { es: "Sunnah: El Profeta recurría a este Dua para despejar la mente de temores sobre el mañana y el destino.", en: "Sunnah: The Prophet used this prayer to clear the mind from worries about tomorrow and destiny.", ar: "استعاذة نبوية من الهم الذي يثقل العقل ويجلب المخاوف." }
                     }
                 ]
             },
@@ -576,28 +583,28 @@
                 titulos: { es: "🍂 Menopausia u Madurez", en: "🍂 Menopause & Maturity", ar: "🍂 سن الأمل والنضج" },
                 estados: [
                     {
-                        nombres: { es: "Sofocos o Calores", en: "Hot Flashes", ar: "هبات ساخنة" },
-                        arabe: "اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ وَاشْفِ لَا شِفَاءَ إِلَّا شِفَاؤُكَ",
+                        nombres: { es: "Sofocos / Calores", en: "Hot Flashes", ar: "هبات ساخنة" },
+                        arabe: "اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ وَاشْفِ لَا شِفَاء...َ إِلَّا شِفَاؤُكَ",
                         trads: { es: "¡Oh Allah, Señor de la humanidad! Aleja el daño y cura.", en: "O Allah, Lord of mankind, remove the harm and heal.", ar: "اللَّهُمَّ رَبَّ النَّاسِ أَذْهِبِ الْبَأْسَ" },
-                        frases: { es: "Sunnah: Súplica clásica de protección y bienestar físico que alivia el malestar corporal.", en: "Sunnah: Prophet's comprehensive prayer for health and bodily restoration.", ar: "دعاء الشفاء الذي كان يرقي به النبي ﷺ." }
+                        frases: { es: "Sunnah: Súplica clásica de protección y bienestar físico que alivia los desequilibrios corporales.", en: "Sunnah: Prophet's comprehensive prayer for health and restoring bodily balance.", ar: "دعاء الشفاء الذي كان يرقي به النبي ﷺ للتخفيف من آلام الجسد." }
                     },
                     {
                         nombres: { es: "Insomnio / Descanso", en: "Insomnia", ar: "الأرق وعدم النوم" },
                         arabe: "اللَّهُمَّ غَارَتِ النُّجُومُ وَهَدَأَتِ الْعُيُونُ وَأَنْتَ حَيٌّ قَيُّومٌ أَنِمْ عَيْنِي",
                         trads: { es: "¡Oh Allah! Las estrellas se han ocultado, los ojos descansan, Tú eres el Viviente, dale paz a mi ojo.", en: "O Allah, stars have faded, eyes have rested, and You are the Ever-Living, grant sleep to my eyes.", ar: "دعاء الأرق وزوال السهر" },
-                        frases: { es: "Sunnah: El Profeta enseñó este bello recuerdo para alcanzar la serenidad antes de dormir.", en: "Sunnah: Recited for tranquility when sleep is hard to reach.", ar: "وصية نبوية لمن جافاه النوم ليلاً." }
+                        frases: { es: "Sunnah: El Profeta enseñó este bello recuerdo para alcanzar la serenidad cuando el sueño es difícil.", en: "Sunnah: Recited for deep tranquility when rest is hard to reach due to internal anxiety.", ar: "وصية نبوية غالية لمن جافاه النوم والراحة ليلاً ليطمئن قلبه." }
                     },
                     {
-                        nombres: { es: "Sequedad o Cambios", en: "Bodily Changes", ar: "تغيرات جافة" },
-                        arabe: "اللَّهُمَّ كَمَا حَسَّنْتَ خَلْقِي فَحَسِّنْ خُلُقِي",
-                        trads: { es: "¡Oh Allah! Así como embelleciste mi creación, embellece mi carácter.", en: "O Allah, as You have made my creation beautiful, make my character beautiful.", ar: "اللَّهُمَّ حَسِّنْ خُلُقِي" },
-                        frases: { es: "Tu madurez es una etapa bendita llena de sabiduría y estabilidad espiritual ante Allah.", en: "Your maturity is a blessed era full of wisdom and deep spiritual value.", ar: "سن النضج هو وقار وطاعة مستمرة." }
+                        nombres: { es: "Tristeza por la edad", en: "Sad about Aging", ar: "الحزن بسبب التقدم في السن" },
+                        arabe: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ أَنْ أُرَدَّ إِلَىٰ أَرْذَلِ الْعُمُرِ • اللَّهُمَّ اجْعَلْ خَيْرَ عُمُرِي آخِرَهُ",
+                        trads: { es: "¡Oh Allah! Me refugio en Ti de llegar a la edad más vulnerable. Oh Allah, haz que la mejor parte de mi vida sea el final.", en: "O Allah! I seek refuge in You from being sent back to a senile age. O Allah, make the best part of my life its end.", ar: "اللَّهُمَّ اجْعَلْ خَيْرَ عُمُرِي آخِرَهُ وَخَيْرَ عَمَلِي خَوَاتِيمَهُ" },
+                        frases: { es: "Sunnah: El Profeta pedía bendición en los años avanzados. Tu madurez es una etapa de honor, luz y sabiduría ante Allah.", en: "Sunnah: The Prophet prayed for blessings in advanced age. Your maturity is an era of light and high spiritual value.", ar: "من السنّة الاستعاذة من العجز. شيبتكِ في الإسلام نور ووقار وأجر عظيم عند الله." }
                     },
                     {
-                        nombres: { es: "Nerviosismo", en: "Nervousness", ar: "العصبية والتوتر" },
+                        nombres: { es: "Nerviosismo / Tensión", en: "Nervousness / Tension", ar: "العصبية والتوتر" },
                         arabe: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
                         trads: { es: "Ciertamente, en el recuerdo de Allah sosiegan los corazones.", en: "Verily, in the remembrance of Allah do hearts find rest.", ar: "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ" },
-                        frases: { es: "Recuerda: El Dhikr constante reduce el cortisol y devuelve el equilibrio emocional a tu día.", en: "Remember: Constant Dhikr stabilizes emotions and reduces mental tension.", ar: "ذكر الله يذهب حرارة الصدر والتوتر." }
+                        frases: { es: "Recuerda: El Dhikr constante reduce el cortisol y devuelve el equilibrio emocional a tu día.", en: "Remember: Constant Dhikr stabilizes internal stress and restores emotional control.", ar: "ذكر الله الدائم يذهب حرارة الصدر والضيق النفسي." }
                     }
                 ]
             },
@@ -608,25 +615,25 @@
                         nombres: { es: "Enfadada / Irritada", en: "Angry / Irritated", ar: "غاضبة" },
                         arabe: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
                         trads: { es: "Me refugio en Allah del demonio maldito.", en: "I seek refuge in Allah from the accursed Satan.", ar: "الاستعاذة من الشيطان عند الغضب" },
-                        frases: { es: "Sunnah: El Profeta (ﷺ) dijo que el enfado desaparece de inmediato al refugiarse en Allah.", en: "Sunnah: The Prophet said anger vanishes when seeking refuge in Allah.", ar: "قال النبي ﷺ: إني لأعلم كلمة لو قالها لذهب عنه ما يجد." }
+                        frases: { es: "Sunnah: El Profeta (ﷺ) dijo que el enfado desaparece de inmediato al buscar refugio en Allah.", en: "Sunnah: The Prophet said anger vanishes when seeking refuge in Allah.", ar: "قال النبي ﷺ: إني لأعلم كلمة لو قالها لذهب عنه ما يجد." }
                     },
                     {
                         nombres: { es: "Triste / Agobiada", en: "Sad / Overwhelmed", ar: "حزينة ومهمومة" },
-                        arabe: "اللَّهُ اللَّهُ رَبِّي لَا أُشْرِكُ بِهِ شَيْئًا",
+                        arabe: "اللَّهُ اللَّهُ رَبِّي Lَا أُشْرِكُ بِهِ شَيْئًا",
                         trads: { es: "Allah, Allah es mi Señor, no asocio nada con Él.", en: "Allah, Allah is my Lord, I associate nothing with Him.", ar: "اللَّهُ اللَّهُ رَبِّي لَا أُشْرِكُ بِهِ شَيْئًا" },
-                        frases: { es: "Sunnah: El Profeta enseñó que este es el ruego ideal para los momentos de angustia severa.", en: "Sunnah: The Prophet taught this specific phrase for times of deep distress.", ar: "دعاء الكرب وإزالة الضيق." }
+                        frases: { es: "Sunnah: El Profeta enseñó que este es el ruego ideal para disipar momentos de angustia severa.", en: "Sunnah: The Prophet taught this specific phrase for times of deep, overwhelming distress.", ar: "دعاء الكرب العظيم وإزالة الضيق من الصدر." }
                     },
                     {
-                        nombres: { es: "Con Estrés", en: "Stressed", ar: "مضغوطة" },
+                        nombres: { es: "Con Estrés / Presión", en: "Stressed / Overworked", ar: "مضغوطة ونفسيتي متعبة" },
                         arabe: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
                         trads: { es: "No hay fuerza ni poder excepto en Allah.", en: "There is no might nor power except with Allah.", ar: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ" },
-                        frases: { es: "Sunnah: Es un tesoro del Paraíso que descarga el peso de tus responsabilidades sobre Allah.", en: "Sunnah: It is a treasure from Paradise that unloads all your worries onto Allah.", ar: "كنز من كنوز الجنة لتيسير الأمور." }
+                        frases: { es: "Sunnah: Es un tesoro del Paraíso que descarga el peso de tus responsabilidades directamente sobre Allah.", en: "Sunnah: It is a treasure from Paradise that unloads all your workload onto Allah.", ar: "كنز من كنوز الجنة لتيسير الأمور الصعبة وتخفيف الأحمال." }
                     },
                     {
                         nombres: { es: "Feliz / Agradecida", en: "Happy / Grateful", ar: "سعيدة ممتنة" },
                         arabe: "الْحَمْدُ لِلَّهِ الَّذِي بِنِعْمَتِهِ تَتِمُّ الصَّالِحَاتُ",
                         trads: { es: "Alabado sea Allah por Cuya gracia se completan las buenas obras.", en: "Praise be to Allah by Whose favor good things are accomplished.", ar: "الحمد لله الذي بنعمته تتم الصالحات" },
-                        frases: { es: "Sunnah: El Profeta exclamaba esto cada vez que recibía una noticia que alegraba su corazón.", en: "Sunnah: The Prophet said this whenever he received joyful tidings.", ar: "كان النبي ﷺ يقولها إذا رأى ما يسرّه." }
+                        frases: { es: "Sunnah: El Profeta exclamaba esto cada vez que recibía una noticia que alegraba su corazón.", en: "Sunnah: The Prophet said this whenever he received joyful tidings.", ar: "كان النبي ﷺ يقولها إذا رأى ما يسرّه شكراً لله." }
                     }
                 ]
             },
@@ -636,14 +643,14 @@
                     {
                         nombres: { es: "La Miel (Shifá)", en: "Honey (Healing)", ar: "العسل" },
                         arabe: "فِيهِ شِفَاءٌ لِّلنَّاسِ",
-                        trads: { es: "Contiene curación para la humanidad. (Sura An-Nahl)", en: "In it is healing for mankind.", ar: "فيه شفاء للناس" },
-                        frases: { es: "Sunnah: El Profeta dijo: 'La curación está en tres: un trago de miel, la incisión de la ventosa o la cauterización...'", en: "Sunnah: The Prophet said: 'Healing is in three things: a drink of honey...'", ar: "قال النبي ﷺ: الشِّفاءُ في ثلاثةٍ: شَربةِ عَسَلٍ..." }
+                        trads: { es: "Contiene curación para la humanidad. (Sura An-Nahl)", en: "In it is healing for mankind. (Surah An-Nahl)", ar: "فيه شفاء للناس" },
+                        frases: { es: "Sunnah: El Profeta dijo: 'La curación está en tres: un trago de miel...'", en: "Sunnah: The Prophet said: 'Healing is in three things: a drink of honey...'", ar: "قال النبي ﷺ: الشِّفاءُ في ثلاثةٍ: شَربةِ عَسَلٍ..." }
                     },
                     {
-                        nombres: { es: "Hinojo Negro / Kamun", en: "Black Seed", ar: "الحبة السوداء" },
+                        nombres: { es: "Hinojo Negro / Habbat", en: "Black Seed", ar: "الحبة السوداء" },
                         arabe: "إِنَّ فِي الْحَبَّةِ السَّوْدَاءِ شِفَاءً مِنْ كُلِّ دَاءٍ إِلاَّ السَّامَ",
                         trads: { es: "En la semilla negra hay cura para toda enfermedad excepto la muerte.", en: "In the black seed there is healing for every disease except death.", ar: "شِفَاءٌ مِنْ كُلِّ دَاءٍ إِلاَّ السَّامَ" },
-                        frases: { es: "Sunnah: Potente remedio recomendado por el Mensajero de Allah (ﷺ) para fortalecer defensas.", en: "Sunnah: Powerful remedy praised by Allah's Messenger for all physical ailments.", ar: "حديث صحيح في الحبة السوداء كعلاج لكل داء." }
+                        frases: { es: "Sunnah: Potente remedio recomendado por el Mensajero de Allah (ﷺ) para fortalecer defensas.", en: "Sunnah: Powerful physical remedy praised by Allah's Messenger for physical ailments.", ar: "حديث صحيح في الحبة السوداء كعلاج لكل داء." }
                     },
                     {
                         nombres: { es: "La Ventosa / Hijama", en: "Cupping (Hijama)", ar: "الحجامة" },
@@ -677,20 +684,18 @@
         function cambiarFormaTasbih() {
             const forma = document.getElementById('select-shape').value;
             const el = document.getElementById('tasbih-interactivo');
-            
-            // Limpiar clases anteriores
             el.className = '';
             
-            if(forma === 'classic') el.classList.add('tasbih-classic');
-            if(forma === 'digital') el.classList.add('tasbih-digital');
-            if(forma === 'bolas') el.classList.add('tasbih-bolas');
-            if(forma === 'corazon') el.classList.add('tasbih-corazon');
+            if(forma === '0') el.classList.add('tasbih-classic');
+            if(forma === '1') el.classList.add('tasbih-digital');
+            if(forma === '2') el.classList.add('tasbih-bolas');
+            if(forma === '3') el.classList.add('tasbih-corazon');
         }
 
         function cambiarModoCombinado() {
             const modoDhikr = document.getElementById('select-modo-dhikr').value;
             const selectDhikr = document.getElementById('select-dhikr');
-            if(modoDhikr === 'combinado') {
+            if(modoDhikr === '1') {
                 puntosDhikr = 0;
                 selectDhikr.value = "SubhanAllah";
                 selectDhikr.disabled = true;
@@ -704,6 +709,9 @@
             idiomaActual = document.getElementById('select-lang').value;
             const t = traduccionesInterfaz[idiomaActual];
             
+            // Textos superiores e inicio
+            document.getElementById('btn-top-cal').innerText = t.btnCal;
+            document.getElementById('btn-top-rank').innerText = t.btnRank;
             document.getElementById('app-subtitle').innerText = t.subtitle;
             document.getElementById('main-question').innerText = t.question;
             document.getElementById('btn-modo-mens').innerHTML = t.mens;
@@ -711,21 +719,77 @@
             document.getElementById('btn-modo-meno').innerHTML = t.meno;
             document.getElementById('btn-modo-gen').innerHTML = t.gen;
             document.getElementById('btn-modo-had').innerHTML = t.had;
+            
+            // Botones volver
             document.getElementById('btn-back').innerText = t.back;
+            document.getElementById('btn-back-cal').innerText = t.backSimple;
+            document.getElementById('btn-back-rank').innerText = t.backSimple;
+            
+            // Pantallas
             document.getElementById('subtitle-estado').innerText = t.subEstado;
             document.getElementById('quran-title').innerText = t.quranTitle;
             document.getElementById('quran-subtitle').innerText = t.quranSub;
             document.getElementById('dhikr-title').innerText = t.dhikrTitle;
             document.getElementById('dhikr-subtitle').innerText = t.dhikrSub;
-            document.getElementById('nav-start').innerText = t.navStart;
-            document.getElementById('nav-audio').innerText = t.navAudio;
-            document.getElementById('nav-dhikr').innerText = t.navDhikr;
+            
+            // Botones de YouTube traducidos por completo
+            document.getElementById('yt-link-1').innerText = t.yt1;
+            document.getElementById('yt-link-2').innerText = t.yt2;
+            
+            // Calendario y ranking
             document.getElementById('cal-title').innerText = t.calTitle;
             document.getElementById('cal-subtitle').innerText = t.calSub;
             document.getElementById('box-sunnah-gui').innerHTML = `<strong style="color:#8B008B; display:block; margin-bottom:5px;">${t.sTitle}</strong>${t.sText}`;
+            document.getElementById('rank-title').innerText = t.rankTitle;
+            document.getElementById('text-cycles-done').innerText = t.doneCycles;
+            
+            // Ajustes
+            document.getElementById('ajustes-title').innerText = t.ajustesTitle;
+            document.getElementById('label-username').innerText = t.labelUser;
+            document.getElementById('input-username').placeholder = t.placeholderUser;
+            document.getElementById('label-lang').innerText = t.labelLang;
+            document.getElementById('label-theme').innerText = t.labelTheme;
+            
+            // Tabs menú inferior
+            document.getElementById('nav-start').innerText = t.navStart;
+            document.getElementById('nav-audio').innerText = t.navAudio;
+            document.getElementById('nav-dhikr').innerText = t.navDhikr;
+            document.getElementById('nav-settings').innerText = t.navSettings;
+            
+            // Rellenar selectores dinámicos para que cambien de idioma al instante
+            actualizarSelectoresDinamicos(t);
             
             rotarAya();
             if(modoActual !== '') cambiarModo(modoActual);
+            actualizarDatos();
+        }
+
+        function actualizarSelectoresDinamicos(t) {
+            // Selector de formas
+            const shapeSel = document.getElementById('select-shape');
+            const shapeVal = shapeSel.value || "0";
+            shapeSel.innerHTML = t.shapes.map((s, idx) => `<option value="${idx}">${s}</option>`).join('');
+            shapeSel.value = shapeVal;
+
+            // Selector modo dhikr
+            const modeSel = document.getElementById('select-modo-dhikr');
+            const modeVal = modeSel.value || "0";
+            modeSel.innerHTML = t.modesDhikr.map((m, idx) => `<option value="${idx}">${m}</option>`).join('');
+            modeSel.value = modeVal;
+
+            // Selector de temas
+            const themeSel = document.getElementById('select-color-tema');
+            const themeVal = themeSel.value || "rosa";
+            const keys = ["rosa", "lila", "azul"];
+            themeSel.innerHTML = t.themes.map((themeStr, idx) => `<option value="${keys[idx]}">${themeStr}</option>`).join('');
+            themeSel.value = themeVal;
+
+            // Selector de tipo registro calendario
+            const calSel = document.getElementById('cal-tipo-registro');
+            const calVal = calSel.value || "mens";
+            const calKeys = ["mens", "emb", "post", "borrar"];
+            calSel.innerHTML = t.calSelect.map((cStr, idx) => `<option value="${calKeys[idx]}">${cStr}</option>`).join('');
+            calSel.value = calVal;
         }
 
         function cambiarModo(modo) {
@@ -772,13 +836,13 @@
             const modoDhikr = document.getElementById('select-modo-dhikr').value;
             const selectDhikr = document.getElementById('select-dhikr');
 
-            if(modoDhikr === 'combinado') {
+            if(modoDhikr === '1') { // Modo Combinado
                 if(puntosDhikr <= 33) selectDhikr.value = "SubhanAllah";
                 else if(puntosDhikr <= 66) selectDhikr.value = "Alhamdulillah";
                 else if(puntosDhikr <= 99) selectDhikr.value = "Allahu Akbar";
                 else if(puntosDhikr === 100) {
                     estrellasContador++;
-                    alert(idiomaActual === 'es' ? "¡Completaste el ciclo de la Sunnah de 100 repeticiones! ⭐" : "Sunnah cycle of 100 completed! ⭐");
+                    alert(idiomaActual === 'es' ? "¡Completaste el ciclo de la Sunnah de 100 repeticiones! ⭐" : (idiomaActual === 'en' ? "Sunnah cycle of 100 completed! ⭐" : "اكتملت دورة السنة 100 من الأذكار! ⭐"));
                     puntosDhikr = 0;
                     selectDhikr.value = "SubhanAllah";
                 }
@@ -797,7 +861,8 @@
         }
 
         function actualizarDatos() {
-            document.getElementById('rank-name').innerText = `${nombreUser} (Tú)`;
+            const t = traduccionesInterfaz[idiomaActual];
+            document.getElementById('rank-name').innerText = `${nombreUser} (${t.youText})`;
             document.getElementById('rank-pts').innerText = puntosDhikr;
             document.getElementById('star-cycles').innerText = estrellasContador;
         }
@@ -812,7 +877,7 @@
                 day.onclick = () => {
                     const tipo = document.getElementById('cal-tipo-registro').value;
                     if(tipo === 'borrar') {
-                        day.className = 'cal-day'; // Resetea clases y vuelve al fondo blanco
+                        day.className = 'cal-day';
                     } else {
                         day.className = 'cal-day'; 
                         if(tipo === 'mens') day.classList.add('active-mens');
@@ -854,7 +919,6 @@
 
         window.onload = () => {
             cambiarIdiomaGlobal();
-            actualizarDatos();
         };
     </script>
 </body>
